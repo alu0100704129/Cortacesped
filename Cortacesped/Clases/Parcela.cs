@@ -8,9 +8,23 @@ namespace Cortacesped.Clases
 {
     public class Parcela : PictureBox
     {
-        public Parcela()
-        {
 
+        private Int32 m_Fila;
+        private Int32 m_Columna;
+
+        public Parcela() { }
+
+        public Int32 Fila
+        {
+            get { return m_Fila; }
+            set { m_Fila = value; }
         }
+
+        public Int32 Columna
+        {
+            get { return m_Columna; }
+            set { m_Columna = value; }
+        }
+
     }
 }

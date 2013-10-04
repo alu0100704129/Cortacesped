@@ -38,6 +38,8 @@ namespace Cortacesped
                     Parcela parcela = new Parcela();
 
                     // Le asignamos las propiadades básicas al control teniendo en cuenta que es un PictureBox
+                    parcela.Fila = f;
+                    parcela.Columna = r;
                     parcela.Name = "m_Parcela" + f.ToString() + r.ToString();
                     parcela.Tag = "Cesped";
                     parcela.Size = new Size(48, 48);
