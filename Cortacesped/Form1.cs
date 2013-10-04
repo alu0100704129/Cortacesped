@@ -12,13 +12,11 @@ namespace Cortacesped
 {
     public partial class Form1 : Form
     {
-
-        
         
         public Form1()
         {
             InitializeComponent();
-            IniciarBotones();
+            IniciarObjetosGraficos();
             
         }
 
@@ -29,20 +27,17 @@ namespace Cortacesped
         }
 
 
-        private void IniciarBotones()
+        private void IniciarObjetosGraficos()
         {
 
             for(Int32 f = 0; f < 7; f++)
             {
                 for(Int32 r = 0; r < 10; r++)
                 {
-                    // Creamos un NUEVO control que es un objeto de tipo PictureBox
-                    //PictureBox parcela = new PictureBox();
+                    // Creamos un NUEVO control que es un objeto de tipo Parcela que hereda de PictureBox
                     Parcela parcela = new Parcela();
 
-
-
-                    // Le asignamos las propiadades básicas al control
+                    // Le asignamos las propiadades básicas al control teniendo en cuenta que es un PictureBox
                     parcela.Name = "m_Parcela" + f.ToString() + r.ToString();
                     parcela.Tag = "Cesped";
                     parcela.Size = new Size(48, 48);
@@ -50,10 +45,12 @@ namespace Cortacesped
                     parcela.Image = Cortacesped.Properties.Resources.Cesped_Largo;
                     parcela.BackColor = Color.Green;
 
-                    // Añadimos un evento a nuestro control
+                    // Añadimos un evento a nuestro objeto de tipo Parcela
                     parcela.Click += new EventHandler(Evento_Click);
 
-                    //Añadimos el control al contenedor de controles de nuestro formulario
+                    // Nuestro objeto Parcela hereda de PictureBox y, PictureBox, es un control,
+                    // por lo tanto, nuestro objeto Parcela también es un control, y por ello, podemos
+                    // añadirlo al contenedor de controles de nuestro formulario
                     this.Controls.Add(parcela);
                 }
             }
