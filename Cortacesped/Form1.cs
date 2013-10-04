@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Cortacesped.Clases;
 
 namespace Cortacesped
 {
@@ -36,21 +37,24 @@ namespace Cortacesped
                 for(Int32 r = 0; r < 10; r++)
                 {
                     // Creamos un NUEVO control que es un objeto de tipo PictureBox
-                    PictureBox pic = new PictureBox();
+                    //PictureBox parcela = new PictureBox();
+                    Parcela parcela = new Parcela();
+
+
 
                     // Le asignamos las propiadades básicas al control
-                    pic.Name = "m_Pic" +f.ToString() + r.ToString();
-                    pic.Tag = "Cesped";
-                    pic.Size = new Size(48, 48);
-                    pic.Location = new Point(r * pic.Size.Width, f * pic.Size.Height);
-                    pic.Image = Cortacesped.Properties.Resources.Cesped_Largo;
-                    pic.BackColor = Color.Green;
+                    parcela.Name = "m_Pic" + f.ToString() + r.ToString();
+                    parcela.Tag = "Cesped";
+                    parcela.Size = new Size(48, 48);
+                    parcela.Location = new Point(r * parcela.Size.Width, f * parcela.Size.Height);
+                    parcela.Image = Cortacesped.Properties.Resources.Cesped_Largo;
+                    parcela.BackColor = Color.Green;
 
                     // Añadimos un evento a nuestro control
-                    pic.Click += new EventHandler(Evento_Click);
+                    parcela.Click += new EventHandler(Evento_Click);
 
                     //Añadimos el control al contenedor de controles de nuestro formulario
-                    this.Controls.Add(pic);
+                    this.Controls.Add(parcela);
                 }
             }
 
