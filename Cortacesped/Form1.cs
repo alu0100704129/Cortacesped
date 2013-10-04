@@ -43,7 +43,7 @@ namespace Cortacesped
 
 
                     // Le asignamos las propiadades básicas al control
-                    parcela.Name = "m_Pic" + f.ToString() + r.ToString();
+                    parcela.Name = "m_Parcela" + f.ToString() + r.ToString();
                     parcela.Tag = "Cesped";
                     parcela.Size = new Size(48, 48);
                     parcela.Location = new Point(r * parcela.Size.Width, f * parcela.Size.Height);
@@ -59,7 +59,7 @@ namespace Cortacesped
             }
 
             // Colocamos, inicialmente, el Robot en la posición [0, 0];
-            PictureBox p = (PictureBox)this.Controls.Find("m_Pic00", false)[0];
+            Parcela p = (Parcela)this.Controls.Find("m_Parcela00", false)[0];
             p.Image = Cortacesped.Properties.Resources.Robot_Right;
             
             // Asignamos su etiqueta como robot y eliminamos el evento click
@@ -73,19 +73,17 @@ namespace Cortacesped
         
         private void Evento_Click(object sender, EventArgs e)
         {
-            PictureBox picBox = (PictureBox)sender;
+            Parcela parcela = (Parcela)sender;
             
-            String nombre = picBox.Image.ToString();
-
-            if(picBox.Tag.ToString() == "Cesped")
+            if(parcela.Tag.ToString() == "Cesped")
             {
-                picBox.Image = Cortacesped.Properties.Resources.Arbol;
-                picBox.Tag = "Arbol";
+                parcela.Image = Cortacesped.Properties.Resources.Arbol;
+                parcela.Tag = "Arbol";
             }
             else
             {
-                picBox.Image = Cortacesped.Properties.Resources.Cesped_Largo;
-                picBox.Tag = "Cesped";
+                parcela.Image = Cortacesped.Properties.Resources.Cesped_Largo;
+                parcela.Tag = "Cesped";
             }
 
         }
