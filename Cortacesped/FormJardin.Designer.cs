@@ -34,18 +34,19 @@
             // 
             // timerVelocidad
             // 
-            this.timerVelocidad.Enabled = true;
-            this.timerVelocidad.Interval = 400;
+            this.timerVelocidad.Interval = 250;
             this.timerVelocidad.Tick += new System.EventHandler(this.timerVelocidad_Tick);
             // 
             // FormJardin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(480, 336);
             this.Name = "FormJardin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cortacesped";
+            this.Load += new System.EventHandler(this.FormJardin_Load);
             this.ResumeLayout(false);
 
         }

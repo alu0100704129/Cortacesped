@@ -40,6 +40,7 @@
             this.numericOstaculos = new System.Windows.Forms.NumericUpDown();
             this.ckManualObstaculos = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.pBar = new System.Windows.Forms.ProgressBar();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericAncho)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericAlto)).BeginInit();
@@ -95,7 +96,7 @@
             // 
             this.numericAncho.Location = new System.Drawing.Point(122, 52);
             this.numericAncho.Maximum = new decimal(new int[] {
-            25,
+            200,
             0,
             0,
             0});
@@ -118,7 +119,7 @@
             // 
             this.numericAlto.Location = new System.Drawing.Point(122, 26);
             this.numericAlto.Maximum = new decimal(new int[] {
-            14,
+            200,
             0,
             0,
             0});
@@ -139,10 +140,9 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAceptar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAceptar.Image = ((System.Drawing.Image)(resources.GetObject("btnAceptar.Image")));
-            this.btnAceptar.Location = new System.Drawing.Point(12, 107);
+            this.btnAceptar.Location = new System.Drawing.Point(12, 111);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(344, 40);
             this.btnAceptar.TabIndex = 4;
@@ -179,6 +179,11 @@
             this.numericOstaculos.Size = new System.Drawing.Size(40, 20);
             this.numericOstaculos.TabIndex = 10;
             this.numericOstaculos.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericOstaculos.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             // 
             // ckManualObstaculos
             // 
@@ -206,11 +211,20 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Obstáculos";
             // 
+            // pBar
+            // 
+            this.pBar.Location = new System.Drawing.Point(93, 160);
+            this.pBar.Name = "pBar";
+            this.pBar.Size = new System.Drawing.Size(263, 23);
+            this.pBar.Step = 1;
+            this.pBar.TabIndex = 8;
+            // 
             // FormConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(368, 161);
+            this.ClientSize = new System.Drawing.Size(368, 195);
+            this.Controls.Add(this.pBar);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnAceptar);
@@ -241,5 +255,6 @@
         private System.Windows.Forms.NumericUpDown numericOstaculos;
         private System.Windows.Forms.CheckBox ckManualObstaculos;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ProgressBar pBar;
     }
 }

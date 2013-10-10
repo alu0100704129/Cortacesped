@@ -50,6 +50,8 @@ namespace Cortacesped
         private void btnAceptar_Click(object sender, EventArgs e)
         {
 
+            
+
             InitializeJardin();
             
             
@@ -88,12 +90,26 @@ namespace Cortacesped
 
         private void ConstruirJardin(Int32 filas, Int32 columnas, Boolean obstaculosManual)
         {
+            Int32 posX, posY, dimension;
             jardin = new Jardin(filas, columnas);
             Random rnd = new Random(DateTime.Now.Millisecond);
             Int32 tamJardin = filas * columnas;
             Decimal factor = (Decimal.Parse(this.numericOstaculos.Value.ToString()) / 100) * tamJardin;
             Int32 total = (Int32)factor;
-            Int32 posX, posY;
+            
+            Int32 altoObjeto = ((Screen.PrimaryScreen.Bounds.Height-80) / filas);
+            Int32 anchoObjeto = ((Screen.PrimaryScreen.Bounds.Width-40) / columnas);
+
+            if(altoObjeto > anchoObjeto)
+            {
+                dimension = anchoObjeto;
+            }
+            else
+            {
+                dimension = altoObjeto;
+            }
+
+            
 
             for(Int32 fil = 0; fil < jardin.Filas; fil++)
             {
@@ -106,13 +122,14 @@ namespace Cortacesped
                     parcela.Fila = fil;
                     parcela.Columna = col;
                     parcela.Name = "m_Parcela" + fil.ToString() + col.ToString();
-                    parcela.Size = new Size(48, 48);
+                    parcela.Size = new Size(dimension, dimension);
                     parcela.Location = new Point(col * parcela.Size.Width, fil * parcela.Size.Height);
                     parcela.Tag = "Cesped_Largo";
                     parcela.Image = Cortacesped.Properties.Resources.Cesped_Largo;
+                    parcela.SizeMode = PictureBoxSizeMode.StretchImage;
                     
                     jardin.Parcelas[fil, col] = parcela;
-
+                    this.pBar.PerformStep();
                 }
             }
 
