@@ -28,7 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.timerVelocidad = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
+            // 
+            // timerVelocidad
+            // 
+            this.timerVelocidad.Enabled = true;
+            this.timerVelocidad.Interval = 400;
+            this.timerVelocidad.Tick += new System.EventHandler(this.timerVelocidad_Tick);
             // 
             // FormJardin
             // 
@@ -43,6 +51,8 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer timerVelocidad;
 
 
     }

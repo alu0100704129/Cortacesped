@@ -110,23 +110,107 @@ namespace Cortacesped
             parcela.Click -= Evento_Click;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+       
+
+        private void timerVelocidad_Tick(object sender, EventArgs e)
         {
+            Parcela actual, siguiente;
+
+            // Moverse a la derecha
+            if((m_Robot.Columna < m_Jardin.Columnas - 1) && 
+                (m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna + 1].Tag.ToString().Contains("Cesped")) && 
+                (!m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna + 1].Visitada))
+            {
+                siguiente = m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna + 1];
+                //actual = m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna];
+
+                actual = (Parcela)this.Controls.Find("m_Parcela" + m_Robot.Fila.ToString() + m_Robot.Columna.ToString(), false)[0];
+
+                actual.Tag = "Cesped_Corto";
+                actual.Image = Cortacesped.Properties.Resources.Cesped_Corto;
+                actual.Visitada = true;
+                m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna] = actual;
+
+                m_Robot.Location = new Point(m_Robot.Location.X + 48, m_Robot.Location.Y);
+                m_Robot.Image = Cortacesped.Properties.Resources.Robot_Right;
+
+                m_Robot.Columna++;
+                m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna] = m_Robot;
+                
+            }
+            // Moverse abajo
+            else if((m_Robot.Fila < m_Jardin.Filas - 1) && 
+                (m_Jardin.Parcelas[m_Robot.Fila + 1, m_Robot.Columna].Tag.ToString().Contains("Cesped")) &&
+                (!m_Jardin.Parcelas[m_Robot.Fila + 1, m_Robot.Columna].Visitada))
+            {
+                siguiente = m_Jardin.Parcelas[m_Robot.Fila+1, m_Robot.Columna];
+                //actual = m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna];
+
+                actual = (Parcela)this.Controls.Find("m_Parcela" + m_Robot.Fila.ToString() + m_Robot.Columna.ToString(), false)[0];
+
+                actual.Tag = "Cesped_Corto";
+                actual.Image = Cortacesped.Properties.Resources.Cesped_Corto;
+                actual.Visitada = true;
+                m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna] = actual;
+
+                m_Robot.Location = new Point(m_Robot.Location.X, m_Robot.Location.Y + 48);
+                m_Robot.Image = Cortacesped.Properties.Resources.Robot_Down;
+
+                m_Robot.Fila++;
+                m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna] = m_Robot;                
+            }
+            // Moverse a la izquierda
+            else if((m_Robot.Columna > 1) && 
+                (m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna - 1].Tag.ToString().Contains("Cesped")) &&
+                (!m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna - 1].Visitada))
+            {
+                siguiente = m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna-1];
+                //actual = m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna];
+
+                actual = (Parcela)this.Controls.Find("m_Parcela" + m_Robot.Fila.ToString() + m_Robot.Columna.ToString(), false)[0];
+                actual.Tag = "Cesped_Corto";
+                actual.Image = Cortacesped.Properties.Resources.Cesped_Corto;
+                actual.Visitada = true;
+                m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna] = actual;
+
+                m_Robot.Location = new Point(m_Robot.Location.X - 48, m_Robot.Location.Y);
+                m_Robot.Image = Cortacesped.Properties.Resources.Robot_Left;
+
+                m_Robot.Columna--;
+                m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna] = m_Robot;
+                
+            }
+            // Moverse arriba
+            else if((m_Robot.Fila > 1) &&
+                (m_Jardin.Parcelas[m_Robot.Fila - 1, m_Robot.Columna].Tag.ToString().Contains("Cesped")) &&
+                (!m_Jardin.Parcelas[m_Robot.Fila - 1, m_Robot.Columna].Visitada))
+            {
+                siguiente = m_Jardin.Parcelas[m_Robot.Fila - 1, m_Robot.Columna];
+                //actual = m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna];
+
+                actual = (Parcela)this.Controls.Find("m_Parcela" + m_Robot.Fila.ToString() + m_Robot.Columna.ToString(), false)[0];
+                actual.Tag = "Cesped_Corto";
+                actual.Image = Cortacesped.Properties.Resources.Cesped_Corto;
+                actual.Visitada = true;
+                m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna] = actual;
+
+                m_Robot.Location = new Point(m_Robot.Location.X, m_Robot.Location.Y - 48);
+                m_Robot.Image = Cortacesped.Properties.Resources.Robot_Up;
+
+                m_Robot.Fila--;
+                m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna] = m_Robot;
+
+            }
+            else
+            {
+                this.Text = "Cortacesped Finalizado";
+                this.timerVelocidad.Stop();
+            }
+
             
-
-            Size clientTam = this.ClientSize;
-            Size formTam = this.Size;
-
-            String a = this.Text;
-
-            this.ClientSize = new Size(this.ClientSize.Width + 48, this.ClientSize.Height);
-            clientTam = this.ClientSize;
-            formTam = this.Size;
-
-            a = this.Text;
-
-
+            
         }
 
+        
     }
 }

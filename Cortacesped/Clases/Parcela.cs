@@ -11,6 +11,7 @@ namespace Cortacesped.Clases
 
         private Int32 m_Fila;
         private Int32 m_Columna;
+        private Boolean m_Visitado;
 
         public Parcela() { }
 
@@ -24,6 +25,12 @@ namespace Cortacesped.Clases
         {
             get { return m_Columna; }
             set { m_Columna = value; }
+        }
+
+        public Boolean Visitada
+        {
+            get { return m_Visitado; }
+            set { m_Visitado = value; }
         }
 
     }

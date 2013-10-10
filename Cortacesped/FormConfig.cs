@@ -74,7 +74,9 @@ namespace Cortacesped
                 col = Int32.Parse(this.numericAncho.Value.ToString());
             }
             
-            ConstruirJardin(fil, col);
+
+
+            ConstruirJardin(fil, col, this.ckManualObstaculos.Checked);
 
             
             FormJardin f = new FormJardin(ref jardin);
@@ -84,11 +86,15 @@ namespace Cortacesped
 
         }
 
-        private void ConstruirJardin(Int32 filas, Int32 columnas)
+        private void ConstruirJardin(Int32 filas, Int32 columnas, Boolean obstaculosManual)
         {
             jardin = new Jardin(filas, columnas);
+            Random rnd = new Random(DateTime.Now.Millisecond);
+            Int32 tamJardin = filas * columnas;
+            Decimal factor = (Decimal.Parse(this.numericOstaculos.Value.ToString()) / 100) * tamJardin;
+            Int32 total = (Int32)factor;
+            Int32 posX, posY;
 
-            
             for(Int32 fil = 0; fil < jardin.Filas; fil++)
             {
                 for(Int32 col = 0; col < jardin.Columnas; col++)
@@ -97,24 +103,33 @@ namespace Cortacesped
                     Parcela parcela = new Parcela();
 
                     // Le asignamos las propiadades básicas al control teniendo en cuenta que es un PictureBox
-
-                    parcela.Name = "m_Parcela" + fil.ToString() + col.ToString();
-                    parcela.Tag = "Cesped_Largo";
-                    parcela.Size = new Size(48, 48);
-                    parcela.Location = new Point(col * parcela.Size.Width, fil * parcela.Size.Height);
-                    parcela.Image = Cortacesped.Properties.Resources.Cesped_Largo;
-                    
                     parcela.Fila = fil;
                     parcela.Columna = col;
+                    parcela.Name = "m_Parcela" + fil.ToString() + col.ToString();
+                    parcela.Size = new Size(48, 48);
+                    parcela.Location = new Point(col * parcela.Size.Width, fil * parcela.Size.Height);
+                    parcela.Tag = "Cesped_Largo";
+                    parcela.Image = Cortacesped.Properties.Resources.Cesped_Largo;
                     
                     jardin.Parcelas[fil, col] = parcela;
-
-                    
-                    
 
                 }
             }
 
+            if(!obstaculosManual)
+            {
+                while(total > 0)
+                {
+                    posX = rnd.Next(0, columnas);
+                    posY = rnd.Next(0, filas);
+                    if(jardin.Parcelas[posY, posX].Tag.ToString() == "Cesped_Largo")
+                    {
+                        jardin.Parcelas[posY, posX].Tag = "Arbol";
+                        jardin.Parcelas[posY, posX].Image = Cortacesped.Properties.Resources.Arbol;
+                        total -= 1;
+                    }
+                }
+            }
         }
 
 
