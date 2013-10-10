@@ -73,9 +73,29 @@ namespace Cortacesped.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cesped_Corto {
+            get {
+                object obj = ResourceManager.GetObject("Cesped_Corto", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Cesped_Largo {
             get {
                 object obj = ResourceManager.GetObject("Cesped_Largo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ok {
+            get {
+                object obj = ResourceManager.GetObject("ok", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

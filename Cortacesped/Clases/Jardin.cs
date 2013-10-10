@@ -14,7 +14,7 @@ namespace Cortacesped.Clases
         
         public Jardin(Int32 filas, Int32 columnas)
         {
-            if((filas > 6) && (filas < 15) && (columnas > 6) && (columnas < 15))
+            if((filas > 4) && (filas < 15) && (columnas > 4) && (columnas < 26))
             {
                 m_Filas = filas;
                 m_Columnas = columnas;
@@ -26,19 +26,42 @@ namespace Cortacesped.Clases
             }
 
             m_Parcelas = new Parcela[m_Filas, m_Columnas];
-
+                        
         }
 
-        public Boolean AddParcela(Parcela parcela)
+        public Int32 Filas
         {
-            Boolean flag = false;
-            
-
-
-            return flag;
+            get { return m_Filas; }
+            set { m_Filas = value; }
         }
 
+        public Int32 Columnas
+        {
+            get { return m_Columnas; }
+            set { m_Columnas = value; }
+        }
 
+        public Parcela[,] Parcelas
+        {
+            get { return m_Parcelas; }
+            set { m_Parcelas = value; }
+        }
+
+            
+            
+        
+
+
+
+
+        
+
+        private void ConstruirJardin()
+        {
+
+
+
+        }
 
 
 

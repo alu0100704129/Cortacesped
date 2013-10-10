@@ -117,29 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Cesped_Corto" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Cesped_Corto.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Robot_Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Robot_Down.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Arbol" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Arbol.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Robot_Left" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Robot_Left.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Robot_Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Robot_Up.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Robot_Right" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Robot_Right.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Cesped_Largo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Cesped_Largo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ok" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ok.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnAceptar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAAC/SURBVDhP1VEhDsMwDDQcLAwNDCwcDSwcLC3cE/aFwsLS
+        wMLA0sDCfWHP8HJpsk2TpiZhO8mKY+nOPpv+C5MzHNNyaNuyvhPf1rFOpFsUm0fPZ/8Wi3TmwspRIGOS
+        WM6HtBQEaKqwgI6BPPsYfRxBLsSI+CXh89T98AraCR6YQsB38k6GuJ0zvCsruN/US0Suhd7Rsd12EgSQ
+        Z3tPaDwhiTTYRY73Twz2+h491/s3sAuIVN0dwC5OnoxpYukHiJ7ERIuJKdA3VQAAAABJRU5ErkJggg==
+</value>
   </data>
 </root>

@@ -1,8 +1,8 @@
-c:\users\oliver\documents\visual studio 2010\Projects\Cortacesped\Cortacesped\bin\Debug\Cortacesped.exe
-c:\users\oliver\documents\visual studio 2010\Projects\Cortacesped\Cortacesped\bin\Debug\Cortacesped.pdb
-c:\users\oliver\documents\visual studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.Form1.resources
-c:\users\oliver\documents\visual studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.Properties.Resources.resources
-c:\users\oliver\documents\visual studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.csproj.GenerateResource.Cache
-c:\users\oliver\documents\visual studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.exe
-c:\users\oliver\documents\visual studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.pdb
-C:\Users\Oliver\Documents\Visual Studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.csprojResolveAssemblyReference.cache
+C:\Users\Oliver\Documents\Visual Studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.FormJardin.resources
+C:\Users\Oliver\Documents\Visual Studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.FormConfig.resources
+C:\Users\Oliver\Documents\Visual Studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.Properties.Resources.resources
+C:\Users\Oliver\Documents\Visual Studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.csproj.GenerateResource.Cache
+C:\Users\Oliver\Documents\Visual Studio 2010\Projects\Cortacesped\Cortacesped\bin\Debug\Cortacesped.exe
+C:\Users\Oliver\Documents\Visual Studio 2010\Projects\Cortacesped\Cortacesped\bin\Debug\Cortacesped.pdb
+C:\Users\Oliver\Documents\Visual Studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.exe
+C:\Users\Oliver\Documents\Visual Studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.pdb
