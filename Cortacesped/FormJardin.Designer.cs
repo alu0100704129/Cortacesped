@@ -46,6 +46,7 @@
             this.Name = "FormJardin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cortacesped";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormJardin_FormClosing);
             this.Load += new System.EventHandler(this.FormJardin_Load);
             this.ResumeLayout(false);
 

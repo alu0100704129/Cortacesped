@@ -35,12 +35,13 @@
             this.ckAutoDimension = new System.Windows.Forms.CheckBox();
             this.numericAncho = new System.Windows.Forms.NumericUpDown();
             this.numericAlto = new System.Windows.Forms.NumericUpDown();
-            this.btnAceptar = new System.Windows.Forms.Button();
+            this.btnIniciar = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.numericOstaculos = new System.Windows.Forms.NumericUpDown();
             this.ckManualObstaculos = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.pBar = new System.Windows.Forms.ProgressBar();
+            this.btnRepetir = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericAncho)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericAlto)).BeginInit();
@@ -138,19 +139,19 @@
             0,
             0});
             // 
-            // btnAceptar
+            // btnIniciar
             // 
-            this.btnAceptar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAceptar.Image = ((System.Drawing.Image)(resources.GetObject("btnAceptar.Image")));
-            this.btnAceptar.Location = new System.Drawing.Point(12, 111);
-            this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(344, 40);
-            this.btnAceptar.TabIndex = 4;
-            this.btnAceptar.Text = "&Aceptar";
-            this.btnAceptar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnAceptar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnAceptar.UseVisualStyleBackColor = true;
-            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
+            this.btnIniciar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnIniciar.Image = global::Cortacesped.Properties.Resources.ok;
+            this.btnIniciar.Location = new System.Drawing.Point(297, 105);
+            this.btnIniciar.Name = "btnIniciar";
+            this.btnIniciar.Size = new System.Drawing.Size(59, 40);
+            this.btnIniciar.TabIndex = 4;
+            this.btnIniciar.Text = "&Iniciar";
+            this.btnIniciar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnIniciar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnIniciar.UseVisualStyleBackColor = true;
+            this.btnIniciar.Click += new System.EventHandler(this.btnIniciar_Click);
             // 
             // label3
             // 
@@ -219,15 +220,30 @@
             this.pBar.Step = 1;
             this.pBar.TabIndex = 8;
             // 
+            // btnRepetir
+            // 
+            this.btnRepetir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRepetir.Image = ((System.Drawing.Image)(resources.GetObject("btnRepetir.Image")));
+            this.btnRepetir.Location = new System.Drawing.Point(232, 105);
+            this.btnRepetir.Name = "btnRepetir";
+            this.btnRepetir.Size = new System.Drawing.Size(59, 40);
+            this.btnRepetir.TabIndex = 9;
+            this.btnRepetir.Text = "&Repetir";
+            this.btnRepetir.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnRepetir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnRepetir.UseVisualStyleBackColor = true;
+            this.btnRepetir.Click += new System.EventHandler(this.btnRepetir_Click);
+            // 
             // FormConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(368, 195);
+            this.Controls.Add(this.btnRepetir);
             this.Controls.Add(this.pBar);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnAceptar);
+            this.Controls.Add(this.btnIniciar);
             this.Name = "FormConfig";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configuración del jardín";
@@ -247,7 +263,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnAceptar;
+        private System.Windows.Forms.Button btnIniciar;
         private System.Windows.Forms.NumericUpDown numericAncho;
         private System.Windows.Forms.NumericUpDown numericAlto;
         private System.Windows.Forms.CheckBox ckAutoDimension;
@@ -256,5 +272,6 @@
         private System.Windows.Forms.CheckBox ckManualObstaculos;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ProgressBar pBar;
+        private System.Windows.Forms.Button btnRepetir;
     }
 }

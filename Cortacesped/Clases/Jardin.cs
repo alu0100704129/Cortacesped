@@ -11,6 +11,35 @@ namespace Cortacesped.Clases
         private Int32 m_Filas;
         private Int32 m_Columnas;
         private Parcela[,] m_Parcelas;
+
+        public Jardin(Jardin originalJardin)
+        {
+            m_Filas = originalJardin.Filas;
+            m_Columnas = originalJardin.Columnas;
+
+            m_Parcelas = new Parcela[m_Filas, m_Columnas];
+
+            for(int fil = 0; fil < m_Filas; fil++)
+            {
+                for(int col = 0; col < m_Columnas; col++)
+                {
+                    Parcela p = new Parcela();
+                    p.Fila = originalJardin.Parcelas[fil, col].Fila;
+                    p.Columna = originalJardin.Parcelas[fil, col].Columna;
+                    p.Tag = originalJardin.Parcelas[fil, col].Tag;
+                    p.Image = originalJardin.Parcelas[fil, col].Image;
+                    p.Name = originalJardin.Parcelas[fil, col].Name;
+                    p.Size = originalJardin.Parcelas[fil, col].Size;
+                    p.Location = originalJardin.Parcelas[fil, col].Location;
+                    p.SizeMode = originalJardin.Parcelas[fil, col].SizeMode;
+                    m_Parcelas[fil, col] = p;
+
+                }
+            }
+
+
+            
+        }
         
         public Jardin(Int32 filas, Int32 columnas)
         {
@@ -46,9 +75,23 @@ namespace Cortacesped.Clases
             get { return m_Parcelas; }
             set { m_Parcelas = value; }
         }
-
-            
-            
+        
+        public Jardin RestablecerJardin()
+        {
+            for(int fil = 0; fil < this.Filas; fil++)
+            {
+                for(int col = 0; col < this.Columnas; col++)
+                {
+                    if(this.Parcelas[fil, col].Tag.ToString() == "Cesped_Corto")
+                    {
+                        this.Parcelas[fil, col].Tag = "Cesped_Largo";
+                        this.Parcelas[fil, col].Visitada = false;
+                        this.Parcelas[fil, col].Image = Cortacesped.Properties.Resources.Cesped_Largo;
+                    }
+                }
+            }
+            return this;
+        }
         
 
 
