@@ -161,7 +161,6 @@ namespace Cortacesped
                     parcela.SizeMode = PictureBoxSizeMode.StretchImage;
                     
                     jardin.Parcelas[fil, col] = parcela;
-                    this.pBar.PerformStep();
                 }
             }
 

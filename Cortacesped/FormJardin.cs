@@ -85,10 +85,9 @@ namespace Cortacesped
             {
                 m_Robot.Click -= Evento_Click;
                 
-                m_Camino = m_Robot.RecorridoDFS(m_Jardin);
-
-                //m_Jardin = m_Jardin.RestablecerJardin();
-
+                //m_Camino = m_Robot.RecorridoDFS(m_Jardin);
+                m_Camino = m_Robot.RecorridoBFS(m_Jardin);
+                
                 m_Robot.Fila = 0;
                 m_Robot.Columna = 0;
                 m_Robot.Location = new Point(0, 0);
@@ -125,11 +124,6 @@ namespace Cortacesped
                 m_Robot.Image = Cortacesped.Properties.Resources.Robot_Right;
             }
 
-
-
-            //m_Robot.Refresh();
-
-            //this.Refresh();
         }
 
 
@@ -141,61 +135,44 @@ namespace Cortacesped
 
             if(m_Robot.Columna < p.Columna)
             {
-                m_Robot = m_Robot.Mover(Robot.RobotDireccion.Derecha);
-
-                //m_Robot.Location = new Point(this.Location.X + Width, this.Location.Y);
-                //m_Robot.Image = Cortacesped.Properties.Resources.Robot_Right;
-                //m_Robot.Direccion = Robot.RobotDireccion.Derecha;
-                //m_Robot.Columna++;
-                //m_Robot.Pasos++;
-
+                m_Robot.Image = Cortacesped.Properties.Resources.Robot_Right;
+                m_Robot.Direccion = Robot.RobotDireccion.Derecha;
+                m_Robot.MoverAmplitud(ref p);
+                
+                //m_Robot = m_Robot.Mover(Robot.RobotDireccion.Derecha);
                 return;
             }
-            
-            
+                        
             if(m_Robot.Fila > p.Fila)
             {
-                m_Robot = m_Robot.Mover(Robot.RobotDireccion.Arriba);
+                m_Robot.Image = Cortacesped.Properties.Resources.Robot_Up;
+                m_Robot.Direccion = Robot.RobotDireccion.Arriba;
+                m_Robot.MoverAmplitud(ref p);
                 
-                //m_Robot.Location = new Point(m_Robot.Location.X, m_Robot.Location.Y + Width);
-                //m_Robot.Image = Cortacesped.Properties.Resources.Robot_Down;
-                //m_Robot.Direccion = Robot.RobotDireccion.Abajo;
-                //m_Robot.Fila++;
-                //m_Robot.Pasos++;
-                
+                //m_Robot = m_Robot.Mover(Robot.RobotDireccion.Arriba);
                 return;
             }
 
             if(m_Robot.Fila < p.Fila)
             {
-                m_Robot = m_Robot.Mover(Robot.RobotDireccion.Abajo);
-
+                m_Robot.Image = Cortacesped.Properties.Resources.Robot_Down;
+                m_Robot.Direccion = Robot.RobotDireccion.Abajo;
+                m_Robot.MoverAmplitud(ref p);
                 
-                //m_Robot.Location = new Point(m_Robot.Location.X, m_Robot.Location.Y - Width);
-                //m_Robot.Image = Cortacesped.Properties.Resources.Robot_Up;
-                //m_Robot.Direccion = Robot.RobotDireccion.Arriba;
-                //m_Robot.Fila--;
-                //m_Robot.Pasos++;
-
+                //m_Robot = m_Robot.Mover(Robot.RobotDireccion.Abajo);
                 return;
             }
 
             if(m_Robot.Columna > p.Columna)
             {
-                m_Robot = m_Robot.Mover(Robot.RobotDireccion.Izquierda);
-
-                //m_Robot.Location = new Point(m_Robot.Location.X - Width, m_Robot.Location.Y);
-                //m_Robot.Image = Cortacesped.Properties.Resources.Robot_Left;
-                //m_Robot.Direccion = Robot.RobotDireccion.Izquierda;
-                //m_Robot.Columna--;
-                //m_Robot.Pasos++;
-
+                m_Robot.Image = Cortacesped.Properties.Resources.Robot_Left;
+                m_Robot.Direccion = Robot.RobotDireccion.Izquierda;
+                m_Robot.MoverAmplitud(ref p);
+                
+                //m_Robot = m_Robot.Mover(Robot.RobotDireccion.Izquierda);
                 return;
             }
-
             
-            
-
         }
 
 

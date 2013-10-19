@@ -40,7 +40,6 @@
             this.numericOstaculos = new System.Windows.Forms.NumericUpDown();
             this.ckManualObstaculos = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.pBar = new System.Windows.Forms.ProgressBar();
             this.btnRepetir = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericAncho)).BeginInit();
@@ -212,14 +211,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Obstáculos";
             // 
-            // pBar
-            // 
-            this.pBar.Location = new System.Drawing.Point(93, 160);
-            this.pBar.Name = "pBar";
-            this.pBar.Size = new System.Drawing.Size(263, 23);
-            this.pBar.Step = 1;
-            this.pBar.TabIndex = 8;
-            // 
             // btnRepetir
             // 
             this.btnRepetir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -240,7 +231,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(368, 195);
             this.Controls.Add(this.btnRepetir);
-            this.Controls.Add(this.pBar);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnIniciar);
@@ -271,7 +261,6 @@
         private System.Windows.Forms.NumericUpDown numericOstaculos;
         private System.Windows.Forms.CheckBox ckManualObstaculos;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ProgressBar pBar;
         private System.Windows.Forms.Button btnRepetir;
     }
 }

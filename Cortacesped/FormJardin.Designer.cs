@@ -34,7 +34,7 @@
             // 
             // timerVelocidad
             // 
-            this.timerVelocidad.Interval = 250;
+            this.timerVelocidad.Interval = 400;
             this.timerVelocidad.Tick += new System.EventHandler(this.timerVelocidad_Tick);
             // 
             // FormJardin

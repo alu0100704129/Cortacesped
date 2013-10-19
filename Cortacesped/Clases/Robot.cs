@@ -42,7 +42,7 @@ namespace Cortacesped.Clases
         }
 
         
-        // Recorrido en Profundidad
+        // Retorna una lista de objetos Parcela qe representa el camino.
         public List<Parcela> RecorridoDFS(Jardin jardinAux)
         {
             Profundidad(jardinAux);
@@ -50,18 +50,15 @@ namespace Cortacesped.Clases
             return m_CaminoCopia;
         }
 
-        // Recorrido en Amplitud
+        // Retorna una lista de objetos Parcela qe representa el camino.
         public List<Parcela> RecorridoBFS(Jardin jardinAux)
         {
-            
+            m_Camino.Add(jardinAux.Parcelas[0, 0]);
+            m_CaminoCopia.Add(jardinAux.Parcelas[0, 0]);
+            Amplitud(jardinAux);
             return m_CaminoCopia;
         }
-
-        private void Amplitud()
-        {
-
-        }
-
+                
         private void Profundidad(Jardin jardinAux)
         {
             // Mover derecha
@@ -152,18 +149,201 @@ namespace Cortacesped.Clases
                 //Mover(_Robot);
             }
 
+        }
+
+
+        private List<Parcela> retroceso = new List<Parcela>();
+
+
+        private void Amplitud(Jardin jardinAux)
+        {
+            if(m_Camino.Count > 0)
+            {
+                Parcela actual = m_Camino[0];
+
+                
+                //m_CaminoCopia.Add(jardinAux.Parcelas[actual.Fila, actual.Columna]);
+                
+                // Mover derecha
+                if((actual.Columna < jardinAux.Columnas - 1) &&
+                    (jardinAux.Parcelas[actual.Fila, actual.Columna + 1].Tag.ToString().Contains("Cesped")) &&
+                    (!jardinAux.Parcelas[actual.Fila, actual.Columna + 1].Visitada))
+                {
+                    
+                    jardinAux.Parcelas[actual.Fila, actual.Columna + 1].Visitada = true;
+                    m_Camino.Add(jardinAux.Parcelas[actual.Fila, actual.Columna + 1]);
+                    m_CaminoCopia.Add(jardinAux.Parcelas[actual.Fila, actual.Columna + 1]);
+                    
+                    m_CaminoCopia.Add(jardinAux.Parcelas[actual.Fila, actual.Columna]);
+
+                }
+
+                // Mover abajo
+                if((actual.Fila < jardinAux.Filas - 1) &&
+                    (jardinAux.Parcelas[actual.Fila + 1, actual.Columna].Tag.ToString().Contains("Cesped")) &&
+                    (!jardinAux.Parcelas[actual.Fila + 1, actual.Columna].Visitada))
+                {
+                    jardinAux.Parcelas[actual.Fila + 1, actual.Columna].Visitada = true;
+                    m_Camino.Add(jardinAux.Parcelas[actual.Fila + 1, actual.Columna]);
+                    m_CaminoCopia.Add(jardinAux.Parcelas[actual.Fila + 1, actual.Columna]);
+
+                    m_CaminoCopia.Add(jardinAux.Parcelas[actual.Fila, actual.Columna]);
+                }
+
+                // Mover izquierda
+                if((actual.Columna > 0) &&
+                    (jardinAux.Parcelas[actual.Fila, actual.Columna - 1].Tag.ToString().Contains("Cesped")) &&
+                    (!jardinAux.Parcelas[actual.Fila, actual.Columna - 1].Visitada))
+                {
+                    jardinAux.Parcelas[actual.Fila, actual.Columna - 1].Visitada = true;
+                    m_Camino.Add(jardinAux.Parcelas[actual.Fila, actual.Columna - 1]);
+                    m_CaminoCopia.Add(jardinAux.Parcelas[actual.Fila, actual.Columna - 1]);
+
+                    m_CaminoCopia.Add(jardinAux.Parcelas[actual.Fila, actual.Columna]);
+                }
+
+                // Mover arriba
+                if((actual.Fila > 0) &&
+                    (jardinAux.Parcelas[actual.Fila - 1, actual.Columna].Tag.ToString().Contains("Cesped")) &&
+                    (!jardinAux.Parcelas[actual.Fila - 1, actual.Columna].Visitada))
+                {
+                    jardinAux.Parcelas[actual.Fila - 1, actual.Columna].Visitada = true;
+                    m_Camino.Add(jardinAux.Parcelas[actual.Fila - 1, actual.Columna]);
+                    m_CaminoCopia.Add(jardinAux.Parcelas[actual.Fila - 1, actual.Columna]);
+
+                    m_CaminoCopia.Add(jardinAux.Parcelas[actual.Fila, actual.Columna]);
+                }
+
+
+                
+                
+
+                //m_CaminoCopia.Add(jardinAux.Parcelas[actual.Fila, actual.Columna]);
+                m_Camino.RemoveAt(0);
+
+
+                Parcela siguiente = m_Camino[0];
+
+                Int32 distanciaY = Math.Abs(siguiente.Fila - actual.Fila);
+                Int32 distanciaX = Math.Abs(siguiente.Columna - actual.Columna);
+                Int32 total = distanciaY + distanciaX;
+
+                while(total > 0)
+                {
+                    // Hay que subir
+                    if(siguiente.Fila < actual.Fila)
+                    {
+                        if(PosibleIr(RobotDireccion.Arriba))
+                        {
+                            retroceso.Add(jardinAux.Parcelas[actual.Fila - 1, actual.Columna]);
+                            actual.Fila--;
+                            total--;
+                        }
+                        else
+                        {
+                            if(PosibleIr(RobotDireccion.Izquierda))
+                            {
+                                if(siguiente.Columna < actual.Columna)
+                                {
+                                    retroceso.Add(jardinAux.Parcelas[actual.Fila, actual.Columna - 1]);
+                                    actual.Columna--;
+                                    total--;
+                                }
+                            }
+                            else if(PosibleIr(RobotDireccion.Derecha))
+                            {
+
+                            }
+                            else if(PosibleIr(RobotDireccion.Abajo))
+                            {
+
+                            }
+
+
+
+                        }
+
+
+                    
+                    }
+                    
+                    // Hay que bajar
+                    if(siguiente.Fila > actual.Fila)
+                    {
+                        if(jardinAux.Parcelas[actual.Fila + 1, actual.Columna].Visitada)
+                        {
+                            retroceso.Add(jardinAux.Parcelas[actual.Fila + 1, actual.Columna]);
+                            actual.Fila++;
+                            total--;
+                        }
+                    }
+
+
+
+
+
+                }
+
+                
+
+                
+
+                Amplitud(jardinAux);
+                //m_CaminoCopia.Add(jardinAux.Parcelas[actual.Fila, actual.Columna]);
+            }
+        }
+
+        private void Retroceder()
+        {
+
+            //for(int r = 0; r < retroceso.Count; r++)
+            //{
+            //    m_CaminoCopia.Add(retroceso[r]);
+            //}
+
+
+            for(int r = retroceso.Count - 1; r >= 0; r--)
+            {
+                m_CaminoCopia.Add(retroceso[r]);
+            }
+                       
+
             
 
         }
 
+
+
+
+        private Boolean PosibleIr(RobotDireccion direccion)
+        {
+            Boolean flag = false;
+
+
+
+            return flag;
+        }
+        
 
         public void Cortar(ref Parcela parcela)
         {
             parcela.Tag = "Cesped_Corto";
             parcela.Image = Cortacesped.Properties.Resources.Cesped_Corto;
             parcela.Visitada = true;
-            //parcela.Refresh();
         }
+
+
+        public Robot MoverAmplitud(ref Parcela parcela)
+        {
+            this.Location = new Point(parcela.Location.X, parcela.Location.Y);
+            //this.Image = Cortacesped.Properties.Resources.Robot_Right;
+            //this.Direccion = RobotDireccion.Derecha;
+            this.Columna = parcela.Columna;
+            this.Fila = parcela.Fila;
+            this.Pasos++;
+            return this;
+        }
+
 
 
         public Robot Mover(RobotDireccion direccion)
