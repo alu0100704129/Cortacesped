@@ -12,8 +12,12 @@ namespace Cortacesped.Clases
         private Int32 m_Fila;
         private Int32 m_Columna;
         private Boolean m_Visitado;
+        private Int32 m_Valor;
 
-        public Parcela() { }
+        public Parcela()
+        {
+            m_Valor = Int32.MaxValue;
+        }
 
         public Int32 Fila
         {
@@ -31,6 +35,12 @@ namespace Cortacesped.Clases
         {
             get { return m_Visitado; }
             set { m_Visitado = value; }
+        }
+
+        public Int32 Valor
+        {
+            get { return m_Valor; }
+            set { m_Valor = value; }
         }
 
     }

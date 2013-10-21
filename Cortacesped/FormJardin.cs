@@ -88,6 +88,8 @@ namespace Cortacesped
                 //m_Camino = m_Robot.RecorridoDFS(m_Jardin);
                 m_Camino = m_Robot.RecorridoBFS(m_Jardin);
                 
+                m_Camino = m_Robot.CalcularCaminoMinimo(m_Jardin, m_Jardin.Parcelas[0, 0], m_Jardin.Parcelas[8, 8]);
+
                 m_Robot.Fila = 0;
                 m_Robot.Columna = 0;
                 m_Robot.Location = new Point(0, 0);
