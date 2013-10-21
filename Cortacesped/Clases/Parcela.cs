@@ -43,5 +43,20 @@ namespace Cortacesped.Clases
             set { m_Valor = value; }
         }
 
+        public override bool Equals(object obj)
+        {
+            Boolean flag = false;
+            Parcela parcela;
+            if(obj is Parcela)
+            {
+                parcela = (Parcela)obj;
+                if((this.Fila == parcela.Fila) && (this.Columna == parcela.Columna))
+                {
+                    flag = true;
+                }
+            }
+            return flag;
+        }
+
     }
 }

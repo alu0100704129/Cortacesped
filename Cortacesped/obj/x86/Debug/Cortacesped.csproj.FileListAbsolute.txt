@@ -14,4 +14,3 @@ C:\Users\Oliver\Documents\Visual Studio 2010\Projects\Cortacesped\Cortacesped\ob
 C:\Users\Oliver\Documents\Visual Studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.csproj.GenerateResource.Cache
 C:\Users\Oliver\Documents\Visual Studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.exe
 C:\Users\Oliver\Documents\Visual Studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.pdb
-C:\Users\Oliver\documents\visual studio 2010\Projects\Cortacesped\Cortacesped\obj\x86\Debug\Cortacesped.csprojResolveAssemblyReference.cache

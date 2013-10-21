@@ -232,12 +232,97 @@ namespace Cortacesped.Clases
         {
             //List<Parcela> caminoMinimo = new List<Parcela>();
             List<Parcela> caminoAux = new List<Parcela>();
-            Parcela parcelaAux;
+            Parcela parcelaAux = origen;
             Int32 valorSiguiente;
+
+
+
+
+            /*
+            Boolean movimiento = false;            
+            foreach(Parcela parcelaAux in jardinAux.Parcelas)
+            {
+                this.Fila = parcelaAux.Fila;
+                this.Columna = parcelaAux.Columna;
+                
+                // Analizamos si es posible ir a todas las direcciones y marcamos con
+                // los valores correspondientes a cada parcela vecina.
+                if(PosibleIr(RobotDireccion.Derecha, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila, this.Columna + 1].Visitada)
+                    {
+                        valorSiguiente = CalcularValorParcela(jardinAux.Parcelas[this.Fila, this.Columna + 1], origen, destino);
+                        jardinAux.Parcelas[this.Fila, this.Columna + 1].Valor = valorSiguiente;
+                        jardinAux.Parcelas[this.Fila, this.Columna + 1].Visitada = true;
+                        movimiento = true;
+                    }
+                    
+                }
+
+                if(PosibleIr(RobotDireccion.Abajo, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila + 1, this.Columna].Visitada)
+                    {
+                        valorSiguiente = CalcularValorParcela(jardinAux.Parcelas[this.Fila + 1, this.Columna], origen, destino);
+                        jardinAux.Parcelas[this.Fila + 1, this.Columna].Valor = valorSiguiente;
+                        jardinAux.Parcelas[this.Fila + 1, this.Columna].Visitada = true;
+                        movimiento = true;
+                    }
+                    
+                    
+                }
+
+                if(PosibleIr(RobotDireccion.Izquierda, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila, this.Columna - 1].Visitada)
+                    {
+                        valorSiguiente = CalcularValorParcela(jardinAux.Parcelas[this.Fila, this.Columna - 1], origen, destino);
+                        jardinAux.Parcelas[this.Fila, this.Columna - 1].Valor = valorSiguiente;
+                        jardinAux.Parcelas[this.Fila, this.Columna - 1].Visitada = true;
+                        movimiento = true;
+                    }
+                    
+                }
+
+                if(PosibleIr(RobotDireccion.Arriba, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila - 1, this.Columna].Visitada)
+                    {
+                        valorSiguiente = CalcularValorParcela(jardinAux.Parcelas[this.Fila - 1, this.Columna], origen, destino);
+                        jardinAux.Parcelas[this.Fila - 1, this.Columna].Valor = valorSiguiente;
+                        jardinAux.Parcelas[this.Fila - 1, this.Columna].Visitada = true;
+                        movimiento = true;
+                    }
+                }
+
+                if(!movimiento)
+                {
+                    jardinAux.Parcelas[parcelaAux.Fila, parcelaAux.Columna].Valor = Int32.MaxValue;
+                }
+                else
+                {
+                    movimiento = false;
+                }
+                
+            }
+
+            */
+
+
+
+
+
+
+
+
+
+            // =======================================================================
             
             origen.Valor = CalcularValorParcela(origen, origen, destino);
             
             caminoAux.Add(origen);
+                       
+            
             while(caminoAux.Count > 0)
             {
                 // Se toma la primera como referencia de partida y se busca la de menor valor.
@@ -299,8 +384,9 @@ namespace Cortacesped.Clases
                     }
                 }
             }
+            
 
-            return ConstruirCaminoMinimo(origen);
+            return ConstruirCaminoMinimo(jardinAux, origen, destino);
 
         }
 
@@ -338,13 +424,14 @@ namespace Cortacesped.Clases
             return flag;
         }
         
-
-
         private Int32 CalcularValorParcela(Parcela parcela, Parcela origen, Parcela destino)
         {
-            Int32 funcionG = CalcularDistancia(origen, parcela);
-            Int32 funcionH = CalcularDistancia(parcela, destino);
-            return (funcionG + funcionH);
+            return CalcularDistancia(parcela, destino);
+            
+            //Int32 funcionG = 1; // CalcularDistancia(origen, parcela);
+            //Int32 funcionH = CalcularDistancia(parcela, destino);
+            //Int32 funcion_N = funcionG + funcionH;
+            //return funcion_N;
         }
 
         private Int32 CalcularDistancia(Parcela origen, Parcela destino)
@@ -353,26 +440,74 @@ namespace Cortacesped.Clases
             Int32 distanciaX = Math.Abs(origen.Columna - destino.Columna);
             return (distanciaY + distanciaX);
         }
-
+        
         private List<Parcela> ConstruirCaminoMinimo(Jardin jardin, Parcela origen, Parcela destino)
         {
-            Int32 valor = Int32.MaxValue;
-            Parcela actual = origen;
+
             List<Parcela> camino = new List<Parcela>();
+            Int32 valorSiguiente = 0;
+            Int32 valorMinimo = Int32.MaxValue;
+            Parcela actual = origen;
+            Parcela parcelaAux = origen;
             camino.Add(actual);
-            while((actual.Fila != destino.Fila) && (actual.Columna != destino.Columna))
+            
+            while(!actual.Equals(destino))
             {
-                valor = jardin.Parcelas[actual.Fila, actual.Columna + 1].Valor;
+                this.Fila = actual.Fila;
+                this.Columna = actual.Columna;
 
+                // Obtener valor de la parcela Derecha
+                if(PosibleIr(RobotDireccion.Derecha, jardin))
+                {
+                    valorSiguiente = jardin.Parcelas[actual.Fila, actual.Columna + 1].Valor;
+                    if(valorSiguiente < valorMinimo)
+                    {
+                        valorMinimo = valorSiguiente;
+                        parcelaAux = jardin.Parcelas[actual.Fila, actual.Columna + 1];
+                    }
+                }
+                
+                // Obtener valor de la parcela Inferior
+                if(PosibleIr(RobotDireccion.Abajo, jardin))
+                {
+                    valorSiguiente = jardin.Parcelas[actual.Fila + 1, actual.Columna].Valor;
+                    if(valorSiguiente < valorMinimo)
+                    {
+                        valorMinimo = valorSiguiente;
+                        parcelaAux = jardin.Parcelas[actual.Fila + 1, actual.Columna];
+                    }
+                }
+                
+                // Obtener valor de la parcela Izquierda
+                if(PosibleIr(RobotDireccion.Izquierda, jardin))
+                {
+                    valorSiguiente = jardin.Parcelas[actual.Fila, actual.Columna - 1].Valor;
+                    if(valorSiguiente < valorMinimo)
+                    {
+                        valorMinimo = valorSiguiente;
+                        parcelaAux = jardin.Parcelas[actual.Fila, actual.Columna - 1];
+                    }
+                }
+                
 
-
-
+                // Obtener valor de la parcela Superior
+                if(PosibleIr(RobotDireccion.Arriba, jardin))
+                {
+                    valorSiguiente = jardin.Parcelas[actual.Fila - 1, actual.Columna].Valor;
+                    if(valorSiguiente < valorMinimo)
+                    {
+                        valorMinimo = valorSiguiente;
+                        parcelaAux = jardin.Parcelas[actual.Fila - 1, actual.Columna];
+                    }
+                }
+                
+                camino.Add(parcelaAux);
+                actual = parcelaAux;
 
             }
-
-
-
-
+            
+            return camino;
+            
         }
 
         public void Cortar(ref Parcela parcela)

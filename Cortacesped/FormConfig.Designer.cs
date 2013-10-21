@@ -110,7 +110,7 @@
             this.numericAncho.TabIndex = 8;
             this.numericAncho.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericAncho.Value = new decimal(new int[] {
-            10,
+            5,
             0,
             0,
             0});
@@ -133,7 +133,7 @@
             this.numericAlto.TabIndex = 7;
             this.numericAlto.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericAlto.Value = new decimal(new int[] {
-            7,
+            5,
             0,
             0,
             0});
