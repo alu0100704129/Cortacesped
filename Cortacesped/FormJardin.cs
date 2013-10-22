@@ -18,6 +18,7 @@ namespace Cortacesped
         private Robot m_Robot;
         private List<Parcela> m_Camino;
         private String m_Algoritmo;
+        private Parcela m_Destino;
 
         //private Thread m_Hilo = new Thread(FormJardin.Mover);
         
@@ -60,68 +61,89 @@ namespace Cortacesped
                 for(Int32 r = 0; r < m_Jardin.Columnas; r++)
                 {
                     // Añadimos un evento a nuestra parcela
-                    m_Jardin.Parcelas[f, r].Click += new EventHandler(Evento_Click);
+                    m_Jardin.Parcelas[f, r].MouseClick += new MouseEventHandler(Evento_Click);
 
                     // Añadimos la parcela al contenedor de controles del formulario
                     this.Controls.Add(m_Jardin.Parcelas[f, r]);
                 }
             }
             
-            m_Robot.Click += new EventHandler(Evento_Click);
+            m_Robot.MouseClick += new MouseEventHandler(Evento_Click);
 
             this.Controls.Add(m_Robot);
             m_Robot.BringToFront();
             
         }
         
-        private void Evento_Click(object sender, EventArgs e)
+        private void Evento_Click(object sender, MouseEventArgs e)
         {
-            Parcela parcela = (Parcela)sender;
-            
-            if(parcela.Tag.ToString() == "Cesped_Largo")
-            {
-                parcela.Image = Cortacesped.Properties.Resources.Arbol;
-                parcela.Tag = "Arbol";
-            }
-            else if(parcela is Robot)
-            {
-                m_Robot.Click -= Evento_Click;
+            Parcela parcela = sender as Parcela;
 
-                switch(m_Algoritmo)
+            if(e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                if(m_Destino != null)
                 {
-                    case "Profundidad":
-                        m_Camino = m_Robot.RecorridoDFS(m_Jardin);
-                        break;
-                    case "Amplitud" :
-                        m_Camino = m_Robot.RecorridoBFS(m_Jardin);
-                        break;
-                    case "Camino" :
-                        m_Camino = m_Robot.CalcularCaminoMinimo(m_Jardin, m_Jardin.Parcelas[0, 0], m_Jardin.Parcelas[1, 3]);
-                        break;
+                    m_Destino.BorderStyle = BorderStyle.None;
                 }
-
-                m_Robot.Fila = 0;
-                m_Robot.Columna = 0;
-                m_Robot.Location = new Point(0, 0);
-                m_Robot.Image = Cortacesped.Properties.Resources.Robot_Right;
                 
-                m_Robot.Cortar(ref m_Jardin.Parcelas[0, 0]);
+                foreach(Parcela p in m_Jardin.Parcelas)
+                {
+                    if(p.Equals(parcela))
+                    {
+                        m_Destino = m_Jardin.Parcelas[p.Fila, p.Columna];
+                        m_Destino.BorderStyle = BorderStyle.Fixed3D;
+                        break;
+                    }
+                }
                 
-                this.timerVelocidad.Enabled = true;
             }
             else
             {
-                parcela.Image = Cortacesped.Properties.Resources.Cesped_Largo;
-                parcela.Tag = "Cesped_Largo";
+                if(parcela.Tag.ToString() == "Cesped_Largo")
+                {
+                    parcela.Image = Cortacesped.Properties.Resources.Arbol;
+                    parcela.Tag = "Arbol";
+                }
+                else if(parcela is Robot)
+                {
+                    m_Robot.MouseClick -= Evento_Click;
+
+                    switch(m_Algoritmo)
+                    {
+                        case "Profundidad":
+                            m_Camino = m_Robot.RecorridoDFS(m_Jardin);
+                            break;
+                        case "Amplitud":
+                            m_Camino = m_Robot.RecorridoBFS(m_Jardin);
+                            break;
+                        case "Camino":
+                            m_Camino = m_Robot.CalcularCaminoMinimo(m_Jardin, m_Jardin.Parcelas[0, 0], m_Destino);
+                            break;
+                    }
+
+                    m_Robot.Fila = 0;
+                    m_Robot.Columna = 0;
+                    m_Robot.Location = new Point(0, 0);
+                    m_Robot.Image = Cortacesped.Properties.Resources.Robot_Right;
+
+                    m_Robot.Cortar(ref m_Jardin.Parcelas[0, 0]);
+
+                    this.timerVelocidad.Enabled = true;
+                }
+                else
+                {
+                    parcela.Image = Cortacesped.Properties.Resources.Cesped_Largo;
+                    parcela.Tag = "Cesped_Largo";
+                }
             }
+            
         }
 
         private void DisableParcela_Click(ref Parcela parcela)
         {
-            parcela.Click -= Evento_Click;
+            parcela.MouseClick -= Evento_Click;
         }
-              
-
+        
         private void timerVelocidad_Tick(object sender, EventArgs e)
         {
             if(m_Camino.Count > 0)
@@ -137,8 +159,7 @@ namespace Cortacesped
             }
 
         }
-
-
+        
         private void Mover()
         {
             Parcela p = m_Camino[0];
@@ -187,8 +208,7 @@ namespace Cortacesped
             
         }
 
-
-
+        
         /* NO TOCAR VERSION DE PRUEBAS
         public void Mover(Robot _Robot)
         {
