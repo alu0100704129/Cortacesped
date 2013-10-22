@@ -16,10 +16,12 @@ namespace Cortacesped
 
         private Jardin jardin;
         private Robot m_Robot;
+        private String m_Algoritmo;
 
         public FormConfig()
         {
             InitializeComponent();
+            m_Algoritmo = "Profundidad";
         }
 
         private void ckAutoDimension_CheckedChanged(object sender, EventArgs e)
@@ -58,7 +60,7 @@ namespace Cortacesped
             if(jardin != null)
             {
                 RestablecerJardin();
-                FormJardin f = new FormJardin(ref jardin, ref m_Robot);
+                FormJardin f = new FormJardin(ref jardin, ref m_Robot, m_Algoritmo);
                 this.Visible = false;
                 f.ShowDialog(this);
                 this.Visible = true;
@@ -109,12 +111,11 @@ namespace Cortacesped
             
 
             ConstruirJardin(fil, col, this.ckManualObstaculos.Checked);
-            
-            FormJardin f = new FormJardin(ref jardin, ref m_Robot);
 
-            //FormJardin f = new FormJardin(new Jardin(jardin));
+            FormJardin f = new FormJardin(ref jardin, ref m_Robot, m_Algoritmo);
             this.Visible = false;
             f.ShowDialog(this);
+            
             this.Visible = true;
             this.Text = "Configuración del jardin - " + m_Robot.Pasos.ToString() + " pasos.";
 
@@ -194,6 +195,35 @@ namespace Cortacesped
                     }
                 }
             }
+        }
+
+        private void radioButtons_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if(rb == null)
+            {
+                return;
+            }
+            else
+            {
+                m_Algoritmo = rb.Text;
+                if(m_Algoritmo.Contains("Profundidad"))
+                {
+                    m_Algoritmo = "Profundidad";
+                }
+                else if(m_Algoritmo.Contains("Amplitud"))
+                {
+                    m_Algoritmo = "Amplitud";
+                }
+                else if(m_Algoritmo.Contains("Camino"))
+                {
+                    m_Algoritmo = "Camino";
+                }
+                
+                
+                
+            }
+
         }       
 
     }

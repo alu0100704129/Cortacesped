@@ -17,14 +17,16 @@ namespace Cortacesped
         private Jardin m_Jardin;
         private Robot m_Robot;
         private List<Parcela> m_Camino;
+        private String m_Algoritmo;
 
         //private Thread m_Hilo = new Thread(FormJardin.Mover);
         
-        public FormJardin(ref Jardin jardin, ref Robot robot)
+        public FormJardin(ref Jardin jardin, ref Robot robot, String algoritmo)
         {
             m_Jardin = jardin;
             m_Robot = robot;
             m_Camino = new List<Parcela>();
+            m_Algoritmo = algoritmo;
 
             InitializeComponent();
             IniciarObjetosGraficos();
@@ -84,11 +86,19 @@ namespace Cortacesped
             else if(parcela is Robot)
             {
                 m_Robot.Click -= Evento_Click;
-                
-                //m_Camino = m_Robot.RecorridoDFS(m_Jardin);
-                //m_Camino = m_Robot.RecorridoBFS(m_Jardin);
-                
-                m_Camino = m_Robot.CalcularCaminoMinimo(m_Jardin, m_Jardin.Parcelas[0, 0], m_Jardin.Parcelas[1, 3]);
+
+                switch(m_Algoritmo)
+                {
+                    case "Profundidad":
+                        m_Camino = m_Robot.RecorridoDFS(m_Jardin);
+                        break;
+                    case "Amplitud" :
+                        m_Camino = m_Robot.RecorridoBFS(m_Jardin);
+                        break;
+                    case "Camino" :
+                        m_Camino = m_Robot.CalcularCaminoMinimo(m_Jardin, m_Jardin.Parcelas[0, 0], m_Jardin.Parcelas[1, 3]);
+                        break;
+                }
 
                 m_Robot.Fila = 0;
                 m_Robot.Columna = 0;

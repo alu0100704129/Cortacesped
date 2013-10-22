@@ -215,12 +215,10 @@ namespace Cortacesped.Clases
                 }
 
 
-                //m_CaminoCopia.Add(jardinAux.Parcelas[actual.Fila, actual.Columna]);
+                m_CaminoCopia.Add(jardinAux.Parcelas[actual.Fila, actual.Columna]);
 
-                Parcela origen = m_Camino[0];
                 m_Camino.RemoveAt(0);
-                Parcela destino = m_Camino[0];
-
+                
                 // Llamada a la función de creación de camino entre origen y destino
 
                 Amplitud(jardinAux);
