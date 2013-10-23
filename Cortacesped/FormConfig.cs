@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using Cortacesped.Clases;
 
-
 namespace Cortacesped
 {
     public partial class FormConfig : Form
@@ -22,6 +21,7 @@ namespace Cortacesped
         {
             InitializeComponent();
             m_Algoritmo = "Profundidad";
+            this.lbVelocidad.Text = this.tbVelocidad.Value.ToString() + "/ms";
         }
 
         private void ckAutoDimension_CheckedChanged(object sender, EventArgs e)
@@ -60,12 +60,11 @@ namespace Cortacesped
             if(jardin != null)
             {
                 RestablecerJardin();
-                FormJardin f = new FormJardin(ref jardin, ref m_Robot, m_Algoritmo);
+                FormJardin f = new FormJardin(ref jardin, ref m_Robot, m_Algoritmo, this.tbVelocidad.Value);
                 this.Visible = false;
                 f.ShowDialog(this);
                 this.Visible = true;
                 this.Text = "Configuración del jardin - " + m_Robot.Pasos.ToString() + " pasos.";
-                
             }
         }
 
@@ -75,7 +74,7 @@ namespace Cortacesped
             {
                 for(int col = 0; col < jardin.Columnas; col++)
                 {
-                    if(jardin.Parcelas[fil, col].Tag.ToString() == "Cesped_Corto")
+                    if(jardin.Parcelas[fil, col].Tag.ToString().Contains("Cesped"))
                     {
                         jardin.Parcelas[fil, col].Tag = "Cesped_Largo";
                         jardin.Parcelas[fil, col].Visitada = false;
@@ -88,7 +87,9 @@ namespace Cortacesped
             m_Robot.Pasos = 0;
             m_Robot.Location = new Point(0, 0);
             m_Robot.Image = Cortacesped.Properties.Resources.Robot_Right;
+            
             jardin.Parcelas[0, 0].Visitada = true;
+            
         }
 
         private void InitializeJardin()
@@ -109,16 +110,13 @@ namespace Cortacesped
                 col = Int32.Parse(this.numericAncho.Value.ToString());
             }
             
-
             ConstruirJardin(fil, col, this.ckManualObstaculos.Checked);
 
-            FormJardin f = new FormJardin(ref jardin, ref m_Robot, m_Algoritmo);
+            FormJardin f = new FormJardin(ref jardin, ref m_Robot, m_Algoritmo, this.tbVelocidad.Value);
             this.Visible = false;
             f.ShowDialog(this);
-            
             this.Visible = true;
             this.Text = "Configuración del jardin - " + m_Robot.Pasos.ToString() + " pasos.";
-
         }
 
         private void ConstruirJardin(Int32 filas, Int32 columnas, Boolean obstaculosManual)
@@ -129,7 +127,6 @@ namespace Cortacesped
             Int32 tamJardin = filas * columnas;
             Decimal factor = (Decimal.Parse(this.numericOstaculos.Value.ToString()) / 100) * tamJardin;
             Int32 total = (Int32)factor;
-            
             Int32 altoObjeto = ((Screen.PrimaryScreen.Bounds.Height-80) / filas);
             Int32 anchoObjeto = ((Screen.PrimaryScreen.Bounds.Width-40) / columnas);
 
@@ -140,8 +137,7 @@ namespace Cortacesped
             else
             {
                 dimension = altoObjeto;
-            }
-                       
+            }      
 
             for(Int32 fil = 0; fil < jardin.Filas; fil++)
             {
@@ -153,18 +149,15 @@ namespace Cortacesped
                     // Le asignamos las propiadades básicas al control teniendo en cuenta que es un PictureBox
                     parcela.Fila = fil;
                     parcela.Columna = col;
-                    
                     parcela.Name = "m_Parcelaf" + fil.ToString() + "c" + col.ToString();
                     parcela.Size = new Size(dimension, dimension);
                     parcela.Location = new Point(col * parcela.Size.Width, fil * parcela.Size.Height);
                     parcela.Tag = "Cesped_Largo";
                     parcela.Image = Cortacesped.Properties.Resources.Cesped_Largo;
                     parcela.SizeMode = PictureBoxSizeMode.StretchImage;
-                    
                     jardin.Parcelas[fil, col] = parcela;
                 }
             }
-
             jardin.Parcelas[0, 0].Tag = "Cesped_Corto";
             jardin.Parcelas[0, 0].Image = Cortacesped.Properties.Resources.Cesped_Corto;
             jardin.Parcelas[0, 0].Visitada = true;
@@ -181,6 +174,7 @@ namespace Cortacesped
             m_Robot.SizeMode = PictureBoxSizeMode.StretchImage;
             m_Robot.Direccion = Robot.RobotDireccion.Derecha;
             
+            // Si los obstáculos se calculan de forma automática
             if(!obstaculosManual)
             {
                 while(total > 0)
@@ -219,12 +213,14 @@ namespace Cortacesped
                 {
                     m_Algoritmo = "Camino";
                 }
-                
-                
-                
             }
+        }
 
-        }       
+        private void tbVelocidad_Scroll(object sender, EventArgs e)
+        {
+            this.lbVelocidad.Text = this.tbVelocidad.Value.ToString() + "/ms";
+        }
 
+                
     }
 }

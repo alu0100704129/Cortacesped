@@ -19,21 +19,22 @@ namespace Cortacesped
         private List<Parcela> m_Camino;
         private String m_Algoritmo;
         private Parcela m_Destino;
-
-        //private Thread m_Hilo = new Thread(FormJardin.Mover);
         
-        public FormJardin(ref Jardin jardin, ref Robot robot, String algoritmo)
+        public FormJardin(ref Jardin jardin, ref Robot robot, String algoritmo, Int32 velocidad)
         {
             m_Jardin = jardin;
             m_Robot = robot;
             m_Camino = new List<Parcela>();
             m_Algoritmo = algoritmo;
+            
+
+            m_Destino = m_Jardin.Parcelas[m_Jardin.Filas - 1, m_Jardin.Columnas - 1];
+            m_Destino.BorderStyle = BorderStyle.None;
 
             InitializeComponent();
             IniciarObjetosGraficos();
-
             ResizeForm();
-            
+            this.timerVelocidad.Interval = velocidad;
         }
 
         private void FormJardin_Load(object sender, EventArgs e)
@@ -43,7 +44,14 @@ namespace Cortacesped
 
         private void FormJardin_FormClosing(object sender, FormClosingEventArgs e)
         {
-                        
+            for(int fil = 0; fil < m_Jardin.Filas; fil++)
+            {
+                for(int col = 0; col < m_Jardin.Columnas; col++)
+                {
+                    DisableParcela_Click(ref m_Jardin.Parcelas[fil, col]);
+                }
+            }
+            m_Robot.MouseClick -= Evento_Click;
         }
 
         private void ResizeForm()
@@ -55,7 +63,6 @@ namespace Cortacesped
         private void IniciarObjetosGraficos()
         {
             Int32 dimension = m_Jardin.Parcelas[0, 0].Size.Width;
-
             for(Int32 f = 0; f < m_Jardin.Filas; f++)
             {
                 for(Int32 r = 0; r < m_Jardin.Columnas; r++)
@@ -67,12 +74,9 @@ namespace Cortacesped
                     this.Controls.Add(m_Jardin.Parcelas[f, r]);
                 }
             }
-            
             m_Robot.MouseClick += new MouseEventHandler(Evento_Click);
-
             this.Controls.Add(m_Robot);
             m_Robot.BringToFront();
-            
         }
         
         private void Evento_Click(object sender, MouseEventArgs e)
@@ -95,7 +99,6 @@ namespace Cortacesped
                         break;
                     }
                 }
-                
             }
             else
             {
@@ -127,7 +130,6 @@ namespace Cortacesped
                     m_Robot.Image = Cortacesped.Properties.Resources.Robot_Right;
 
                     m_Robot.Cortar(ref m_Jardin.Parcelas[0, 0]);
-
                     this.timerVelocidad.Enabled = true;
                 }
                 else
@@ -136,7 +138,6 @@ namespace Cortacesped
                     parcela.Tag = "Cesped_Largo";
                 }
             }
-            
         }
 
         private void DisableParcela_Click(ref Parcela parcela)
@@ -157,13 +158,11 @@ namespace Cortacesped
                 this.timerVelocidad.Enabled = false;
                 m_Robot.Image = Cortacesped.Properties.Resources.Robot_Right;
             }
-
         }
         
         private void Mover()
         {
             Parcela p = m_Camino[0];
-            
             m_Robot.Cortar(ref m_Jardin.Parcelas[p.Fila, p.Columna]);
 
             if(m_Robot.Columna < p.Columna)
@@ -171,8 +170,6 @@ namespace Cortacesped
                 m_Robot.Image = Cortacesped.Properties.Resources.Robot_Right;
                 m_Robot.Direccion = Robot.RobotDireccion.Derecha;
                 m_Robot.MoverAmplitud(ref p);
-                
-                //m_Robot = m_Robot.Mover(Robot.RobotDireccion.Derecha);
                 return;
             }
                         
@@ -181,8 +178,6 @@ namespace Cortacesped
                 m_Robot.Image = Cortacesped.Properties.Resources.Robot_Up;
                 m_Robot.Direccion = Robot.RobotDireccion.Arriba;
                 m_Robot.MoverAmplitud(ref p);
-                
-                //m_Robot = m_Robot.Mover(Robot.RobotDireccion.Arriba);
                 return;
             }
 
@@ -191,8 +186,6 @@ namespace Cortacesped
                 m_Robot.Image = Cortacesped.Properties.Resources.Robot_Down;
                 m_Robot.Direccion = Robot.RobotDireccion.Abajo;
                 m_Robot.MoverAmplitud(ref p);
-                
-                //m_Robot = m_Robot.Mover(Robot.RobotDireccion.Abajo);
                 return;
             }
 
@@ -201,98 +194,8 @@ namespace Cortacesped
                 m_Robot.Image = Cortacesped.Properties.Resources.Robot_Left;
                 m_Robot.Direccion = Robot.RobotDireccion.Izquierda;
                 m_Robot.MoverAmplitud(ref p);
-                
-                //m_Robot = m_Robot.Mover(Robot.RobotDireccion.Izquierda);
                 return;
             }
-            
         }
-
-        
-        /* NO TOCAR VERSION DE PRUEBAS
-        public void Mover(Robot _Robot)
-        {
-            
-            //System.Threading.Thread.Sleep(250);
-
-
-            for(int a = 0; a < 2000; a++)
-            {
-                for(int b = 0; b < 20000; b++)
-                {
-                    String xc = "hola";
-                }
-            }
-
-
-            this.Refresh();
-
-            //_Robot.Refresh();
-
-            // Mover derecha
-            if((_Robot.Columna < m_Jardin.Columnas - 1) &&
-                (m_Jardin.Parcelas[_Robot.Fila, _Robot.Columna + 1].Tag.ToString().Contains("Cesped")) &&
-                (!m_Jardin.Parcelas[_Robot.Fila, _Robot.Columna + 1].Visitada))
-            {
-                m_Robot.RecorridoDFS(m_Jardin);
-
-                m_Camino.Add(m_Jardin.Parcelas[_Robot.Fila, _Robot.Columna + 1]);
-                                
-                _Robot.Cortar(ref m_Jardin.Parcelas[_Robot.Fila, _Robot.Columna]);
-                _Robot.Mover(ref _Robot, Robot.RobotDireccion.Derecha);
-                
-                
-                Mover(_Robot);
-            }
-            
-            // Mover abajo
-            if((_Robot.Fila < m_Jardin.Filas - 1) &&
-                (m_Jardin.Parcelas[_Robot.Fila + 1, _Robot.Columna].Tag.ToString().Contains("Cesped")) &&
-                (!m_Jardin.Parcelas[_Robot.Fila + 1, _Robot.Columna].Visitada))
-            {
-                m_Camino.Add(m_Jardin.Parcelas[_Robot.Fila + 1, _Robot.Columna]);
-               
-                _Robot.Cortar(ref m_Jardin.Parcelas[_Robot.Fila, _Robot.Columna]);
-                
-                _Robot.Mover(ref _Robot, Robot.RobotDireccion.Abajo);
-                Mover(_Robot);
-                
-            }
-            
-            // Mover izquierda
-            if((_Robot.Columna > 0) &&
-                (m_Jardin.Parcelas[_Robot.Fila, _Robot.Columna - 1].Tag.ToString().Contains("Cesped")) &&
-                (!m_Jardin.Parcelas[_Robot.Fila, _Robot.Columna - 1].Visitada))
-            {
-                m_Camino.Add(m_Jardin.Parcelas[_Robot.Fila, _Robot.Columna - 1]);
-                
-                _Robot.Cortar(ref m_Jardin.Parcelas[_Robot.Fila, _Robot.Columna]);
-                
-                _Robot.Mover(ref _Robot, Robot.RobotDireccion.Izquierda);
-                Mover(_Robot);
-            }
-            
-            // Mover arriba
-            if((_Robot.Fila > 0) &&
-                (m_Jardin.Parcelas[_Robot.Fila - 1, _Robot.Columna].Tag.ToString().Contains("Cesped")) &&
-                (!m_Jardin.Parcelas[_Robot.Fila - 1, _Robot.Columna].Visitada))
-            {
-                m_Camino.Add(m_Jardin.Parcelas[_Robot.Fila - 1, _Robot.Columna]);
-                
-                _Robot.Cortar(ref m_Jardin.Parcelas[_Robot.Fila, _Robot.Columna]);
-                
-                _Robot.Mover(ref _Robot, Robot.RobotDireccion.Arriba);
-                Mover(_Robot);
-            }
-
-
-            
-            this.Text = "Cortacesped Finalizado - " + m_Robot.Pasos.ToString();
-            this.timerVelocidad.Enabled = false;
-            
-        }
-        */
-
-
     }
 }

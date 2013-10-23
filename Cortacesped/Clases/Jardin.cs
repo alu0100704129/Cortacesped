@@ -36,9 +36,6 @@ namespace Cortacesped.Clases
 
                 }
             }
-
-
-            
         }
         
         public Jardin(Int32 filas, Int32 columnas)
@@ -53,9 +50,7 @@ namespace Cortacesped.Clases
                 m_Filas = 7;
                 m_Columnas = 10;
             }
-
             m_Parcelas = new Parcela[m_Filas, m_Columnas];
-                        
         }
 
         public Int32 Filas
@@ -93,20 +88,5 @@ namespace Cortacesped.Clases
             return this;
         }
         
-
-
-
-
-        
-
-        private void ConstruirJardin()
-        {
-
-
-
-        }
-
-
-
     }
 }

@@ -43,13 +43,15 @@ namespace Cortacesped.Clases
             set { m_Valor = value; }
         }
 
+        // Se sobreescribe la función Equals para comparar
+        // objetos de la clase Parcela según su posición (Fila, Columna)
         public override bool Equals(object obj)
         {
             Boolean flag = false;
             Parcela parcela;
             if(obj is Parcela)
             {
-                parcela = (Parcela)obj;
+                parcela = obj as Parcela;
                 if((this.Fila == parcela.Fila) && (this.Columna == parcela.Columna))
                 {
                     flag = true;
@@ -58,6 +60,11 @@ namespace Cortacesped.Clases
             return flag;
         }
 
-        
+        // Al sobreescribir la función Equals, hay que sobreescribir
+        // también la función GetHashCode().
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
