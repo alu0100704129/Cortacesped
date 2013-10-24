@@ -45,10 +45,10 @@
             this.rbProfundidad = new System.Windows.Forms.RadioButton();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.tbVelocidad = new System.Windows.Forms.TrackBar();
-            this.lbVelocidad = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.lbVelocidad = new System.Windows.Forms.Label();
+            this.tbVelocidad = new System.Windows.Forms.TrackBar();
             this.btnRepetir = new System.Windows.Forms.Button();
             this.btnIniciar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -259,13 +259,18 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(6, 19);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(508, 145);
+            this.dataGridView1.Size = new System.Drawing.Size(509, 138);
             this.dataGridView1.TabIndex = 11;
             // 
             // groupBox4
@@ -277,13 +282,27 @@
             this.groupBox4.Controls.Add(this.dataGridView1);
             this.groupBox4.Location = new System.Drawing.Point(12, 187);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(585, 170);
+            this.groupBox4.Size = new System.Drawing.Size(585, 163);
             this.groupBox4.TabIndex = 12;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Estadísticas";
             // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Image = global::Cortacesped.Properties.Resources.doc_excel;
+            this.button1.Location = new System.Drawing.Point(521, 101);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(59, 56);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "&Exportar";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // groupBox5
             // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Controls.Add(this.lbVelocidad);
             this.groupBox5.Controls.Add(this.tbVelocidad);
             this.groupBox5.Location = new System.Drawing.Point(309, 91);
@@ -292,6 +311,14 @@
             this.groupBox5.TabIndex = 13;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Velocidad del Robot";
+            // 
+            // lbVelocidad
+            // 
+            this.lbVelocidad.AutoSize = true;
+            this.lbVelocidad.Location = new System.Drawing.Point(96, 22);
+            this.lbVelocidad.Name = "lbVelocidad";
+            this.lbVelocidad.Size = new System.Drawing.Size(0, 13);
+            this.lbVelocidad.TabIndex = 1;
             // 
             // tbVelocidad
             // 
@@ -305,27 +332,6 @@
             this.tbVelocidad.TickFrequency = 50;
             this.tbVelocidad.Value = 150;
             this.tbVelocidad.Scroll += new System.EventHandler(this.tbVelocidad_Scroll);
-            // 
-            // lbVelocidad
-            // 
-            this.lbVelocidad.AutoSize = true;
-            this.lbVelocidad.Location = new System.Drawing.Point(96, 22);
-            this.lbVelocidad.Name = "lbVelocidad";
-            this.lbVelocidad.Size = new System.Drawing.Size(0, 13);
-            this.lbVelocidad.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Image = global::Cortacesped.Properties.Resources.doc_excel;
-            this.button1.Location = new System.Drawing.Point(520, 124);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(59, 40);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "&Exportar";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // btnRepetir
             // 
@@ -359,7 +365,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(609, 369);
+            this.ClientSize = new System.Drawing.Size(609, 362);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
@@ -367,6 +373,7 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnIniciar);
+            this.MinimumSize = new System.Drawing.Size(625, 400);
             this.Name = "FormConfig";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configuración del jardín";

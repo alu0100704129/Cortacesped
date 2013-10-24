@@ -19,14 +19,17 @@ namespace Cortacesped
         private List<Parcela> m_Camino;
         private String m_Algoritmo;
         private Parcela m_Destino;
+        private DateTime inicioTime, finalTime;
+        private Resultado resultado;
+
         
-        public FormJardin(ref Jardin jardin, ref Robot robot, String algoritmo, Int32 velocidad)
+        public FormJardin(ref Jardin jardin, ref Robot robot, String algoritmo, Int32 velocidad, ref Resultado result)
         {
             m_Jardin = jardin;
             m_Robot = robot;
             m_Camino = new List<Parcela>();
             m_Algoritmo = algoritmo;
-            
+            resultado = result;
 
             m_Destino = m_Jardin.Parcelas[m_Jardin.Filas - 1, m_Jardin.Columnas - 1];
             m_Destino.BorderStyle = BorderStyle.None;
@@ -110,7 +113,8 @@ namespace Cortacesped
                 else if(parcela is Robot)
                 {
                     m_Robot.MouseClick -= Evento_Click;
-
+                    
+                    inicioTime = new DateTime(DateTime.Now.Ticks);
                     switch(m_Algoritmo)
                     {
                         case "Profundidad":
@@ -123,7 +127,10 @@ namespace Cortacesped
                             m_Camino = m_Robot.CalcularCaminoMinimo(m_Jardin, m_Jardin.Parcelas[0, 0], m_Destino);
                             break;
                     }
-
+                    finalTime = new DateTime(DateTime.Now.Ticks);
+                    TimeSpan duration = finalTime - inicioTime;
+                    resultado.Tiempo = duration.Milliseconds;
+                    
                     m_Robot.Fila = 0;
                     m_Robot.Columna = 0;
                     m_Robot.Location = new Point(0, 0);

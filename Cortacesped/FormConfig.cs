@@ -16,12 +16,17 @@ namespace Cortacesped
         private Jardin jardin;
         private Robot m_Robot;
         private String m_Algoritmo;
+        private Resultado resultado;
+        private BindingList<Resultado> resultados;
 
         public FormConfig()
         {
             InitializeComponent();
             m_Algoritmo = "Profundidad";
             this.lbVelocidad.Text = this.tbVelocidad.Value.ToString() + "/ms";
+            
+            resultados = new BindingList<Resultado>();
+            this.dataGridView1.DataSource = resultados;
         }
 
         private void ckAutoDimension_CheckedChanged(object sender, EventArgs e)
@@ -60,11 +65,31 @@ namespace Cortacesped
             if(jardin != null)
             {
                 RestablecerJardin();
-                FormJardin f = new FormJardin(ref jardin, ref m_Robot, m_Algoritmo, this.tbVelocidad.Value);
+                resultado = new Resultado();
+                resultado.Algoritmo = m_Algoritmo;
+                resultado.Alto = jardin.Filas;
+                resultado.Ancho = jardin.Columnas;
+                                
+                FormJardin f = new FormJardin(ref jardin, ref m_Robot, m_Algoritmo, this.tbVelocidad.Value, ref resultado);
                 this.Visible = false;
                 f.ShowDialog(this);
                 this.Visible = true;
                 this.Text = "Configuración del jardin - " + m_Robot.Pasos.ToString() + " pasos.";
+
+                resultado.Obstaculos = 0;
+                foreach(Parcela p in jardin.Parcelas)
+                {
+                    if(p.Tag.ToString().Contains("Arbol"))
+                    {
+                        resultado.Obstaculos++;
+                    }
+                }
+
+                resultado.Parcelas = (jardin.Filas * jardin.Columnas) - resultado.Obstaculos;
+                resultado.Pasos += m_Robot.Pasos;
+
+                resultados.Add(resultado);
+                                
             }
         }
 
@@ -112,11 +137,37 @@ namespace Cortacesped
             
             ConstruirJardin(fil, col, this.ckManualObstaculos.Checked);
 
-            FormJardin f = new FormJardin(ref jardin, ref m_Robot, m_Algoritmo, this.tbVelocidad.Value);
+            resultado = new Resultado();
+
+            resultado.Algoritmo = m_Algoritmo;
+            resultado.Alto = jardin.Filas;
+            resultado.Ancho = jardin.Columnas;
+            
+            FormJardin f = new FormJardin(ref jardin, ref m_Robot, m_Algoritmo, this.tbVelocidad.Value, ref resultado);
             this.Visible = false;
             f.ShowDialog(this);
             this.Visible = true;
             this.Text = "Configuración del jardin - " + m_Robot.Pasos.ToString() + " pasos.";
+            
+            
+            resultado.Obstaculos = 0;
+            foreach(Parcela p in jardin.Parcelas)
+            {
+                if(p.Tag.ToString().Contains("Arbol"))
+                {
+                    resultado.Obstaculos++;
+                }
+            }
+            resultado.Parcelas = (jardin.Filas * jardin.Columnas) - resultado.Obstaculos;
+            resultado.Pasos += m_Robot.Pasos;
+            resultados.Add(resultado);
+
+            //this.dataGridView1.DataSource = resultados;
+            //this.dataGridView1.Refresh();
+            //this.Refresh();
+
+
+
         }
 
         private void ConstruirJardin(Int32 filas, Int32 columnas, Boolean obstaculosManual)

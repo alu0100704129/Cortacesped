@@ -44,6 +44,7 @@ namespace Cortacesped.Clases
         // Retorna una lista de objetos Parcela qe representa el camino.
         public List<Parcela> RecorridoDFS(Jardin jardinAux)
         {
+            
             Profundidad(jardinAux);
             return m_CaminoCopia;
         }
@@ -168,6 +169,12 @@ namespace Cortacesped.Clases
                 m_Camino.RemoveAt(0);
                 
                 // Llamada a la función de creación de camino entre origen y destino
+
+                if(m_Camino.Count > 0)
+                {
+                    this.Pasos += CalcularDistancia(jardinAux.Parcelas[this.Fila, this.Columna], m_Camino[0]);
+                }
+                
 
                 Amplitud(jardinAux);
                 

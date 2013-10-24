@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clases\Configuracion.cs" />
+    <Compile Include="Clases\Resultado.cs" />
     <Compile Include="Clases\Jardin.cs" />
     <Compile Include="Clases\Parcela.cs">
       <SubType>Component</SubType>
