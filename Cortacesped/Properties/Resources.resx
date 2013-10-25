@@ -142,7 +142,7 @@
   <data name="Robot_Left" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Robot_Left.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="doc excel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="docExcel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\doc excel.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

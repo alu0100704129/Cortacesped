@@ -43,9 +43,9 @@
             this.rbCamino = new System.Windows.Forms.RadioButton();
             this.rbAmplitud = new System.Windows.Forms.RadioButton();
             this.rbProfundidad = new System.Windows.Forms.RadioButton();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvResultados = new System.Windows.Forms.DataGridView();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnExcel = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.lbVelocidad = new System.Windows.Forms.Label();
             this.tbVelocidad = new System.Windows.Forms.TrackBar();
@@ -57,7 +57,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericOstaculos)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResultados)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbVelocidad)).BeginInit();
@@ -257,29 +257,29 @@
             this.rbProfundidad.UseVisualStyleBackColor = true;
             this.rbProfundidad.CheckedChanged += new System.EventHandler(this.radioButtons_CheckedChanged);
             // 
-            // dataGridView1
+            // dgvResultados
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvResultados.AllowUserToAddRows = false;
+            this.dgvResultados.AllowUserToDeleteRows = false;
+            this.dgvResultados.AllowUserToResizeColumns = false;
+            this.dgvResultados.AllowUserToResizeRows = false;
+            this.dgvResultados.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(509, 138);
-            this.dataGridView1.TabIndex = 11;
+            this.dgvResultados.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dgvResultados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvResultados.Location = new System.Drawing.Point(6, 19);
+            this.dgvResultados.Name = "dgvResultados";
+            this.dgvResultados.Size = new System.Drawing.Size(509, 138);
+            this.dgvResultados.TabIndex = 11;
             // 
             // groupBox4
             // 
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox4.Controls.Add(this.button1);
-            this.groupBox4.Controls.Add(this.dataGridView1);
+            this.groupBox4.Controls.Add(this.btnExcel);
+            this.groupBox4.Controls.Add(this.dgvResultados);
             this.groupBox4.Location = new System.Drawing.Point(12, 187);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(585, 163);
@@ -287,18 +287,19 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Estadísticas";
             // 
-            // button1
+            // btnExcel
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Image = global::Cortacesped.Properties.Resources.doc_excel;
-            this.button1.Location = new System.Drawing.Point(521, 101);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(59, 56);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "&Exportar";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExcel.Image = global::Cortacesped.Properties.Resources.docExcel;
+            this.btnExcel.Location = new System.Drawing.Point(521, 101);
+            this.btnExcel.Name = "btnExcel";
+            this.btnExcel.Size = new System.Drawing.Size(59, 56);
+            this.btnExcel.TabIndex = 12;
+            this.btnExcel.Text = "&Exportar";
+            this.btnExcel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnExcel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnExcel.UseVisualStyleBackColor = true;
+            this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
             // 
             // groupBox5
             // 
@@ -386,7 +387,7 @@
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResultados)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
@@ -413,11 +414,11 @@
         private System.Windows.Forms.RadioButton rbCamino;
         private System.Windows.Forms.RadioButton rbAmplitud;
         private System.Windows.Forms.RadioButton rbProfundidad;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvResultados;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TrackBar tbVelocidad;
         private System.Windows.Forms.Label lbVelocidad;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnExcel;
     }
 }
