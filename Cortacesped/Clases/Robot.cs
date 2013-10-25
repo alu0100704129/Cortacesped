@@ -174,7 +174,7 @@ namespace Cortacesped.Clases
                 {
                     this.Pasos += CalcularDistancia(jardinAux.Parcelas[this.Fila, this.Columna], m_Camino[0]);
                 }
-                
+
 
                 Amplitud(jardinAux);
                 
@@ -305,7 +305,7 @@ namespace Cortacesped.Clases
             this.Fila = origen.Fila;
             this.Columna = origen.Columna;
 
-            DfsMinimo(jardinAux, destino);
+            DfsMinimoNew(jardinAux, destino);
             
             return m_CaminoCopia;
 
@@ -511,60 +511,328 @@ namespace Cortacesped.Clases
             }
         }
         
+
+
+
+
+
         private void DfsMinimoNew(Jardin jardinAux, Parcela destino)
         {
-            // Mover derecha
-            if((PosibleIr(RobotDireccion.Derecha, jardinAux)) && (!jardinAux.Parcelas[this.Fila, this.Columna + 1].Visitada))
-            {
-                this.Columna = this.Columna + 1;
-                jardinAux.Parcelas[this.Fila, this.Columna].Visitada = true;
-                m_Camino.Add(jardinAux.Parcelas[this.Fila, this.Columna]);
-                m_CaminoCopia.Add(jardinAux.Parcelas[this.Fila, this.Columna]);
-                DfsMinimoNew(jardinAux, destino);
-
-                this.Columna = this.Columna - 1;
-                m_CaminoCopia.Add(jardinAux.Parcelas[this.Fila, this.Columna]);
-            }
-
-            // Mover abajo
-            if((PosibleIr(RobotDireccion.Abajo, jardinAux)) && (!jardinAux.Parcelas[this.Fila + 1, this.Columna].Visitada))
-            {
-                this.Fila = this.Fila + 1;
-                jardinAux.Parcelas[this.Fila, this.Columna].Visitada = true;
-                m_Camino.Add(jardinAux.Parcelas[this.Fila, this.Columna]);
-                m_CaminoCopia.Add(jardinAux.Parcelas[this.Fila, this.Columna]);
-                DfsMinimoNew(jardinAux, destino);
-
-                this.Fila = this.Fila - 1;
-                m_CaminoCopia.Add(jardinAux.Parcelas[this.Fila, this.Columna]);
-            }
-
-            // Mover izquierda
-            if((PosibleIr(RobotDireccion.Izquierda, jardinAux)) && (!jardinAux.Parcelas[this.Fila, this.Columna - 1].Visitada))
-            {
-                this.Columna = this.Columna - 1;
-                jardinAux.Parcelas[this.Fila, this.Columna].Visitada = true;
-                m_Camino.Add(jardinAux.Parcelas[this.Fila, this.Columna]);
-                m_CaminoCopia.Add(jardinAux.Parcelas[this.Fila, this.Columna]);
-                DfsMinimoNew(jardinAux, destino);
-
-                this.Columna = this.Columna + 1;
-                m_CaminoCopia.Add(jardinAux.Parcelas[this.Fila, this.Columna]);
-            }
             
-            // Mover arriba
-            if((PosibleIr(RobotDireccion.Arriba, jardinAux)) && (!jardinAux.Parcelas[this.Fila - 1, this.Columna].Visitada))
-            {
-                this.Fila = this.Fila - 1;
-                jardinAux.Parcelas[this.Fila, this.Columna].Visitada = true;
-                m_Camino.Add(jardinAux.Parcelas[this.Fila, this.Columna]);
-                m_CaminoCopia.Add(jardinAux.Parcelas[this.Fila, this.Columna]);
-                DfsMinimoNew(jardinAux, destino);
+            List<Parcela> vecinos = new List<Parcela>();
+            List<Parcela> camino = new List<Parcela>();
+            IEnumerable<Parcela> query;
 
-                this.Fila = this.Fila + 1;
-                m_CaminoCopia.Add(jardinAux.Parcelas[this.Fila, this.Columna]);
+            List<List<Parcela>> caminos = new List<List<Parcela>>();
+            
+            // ================================= PRIMER BLOQUE DE DIRECCIONES =======================================
+            while((this.Fila != destino.Fila) || (this.Columna != destino.Columna))
+            {
+
+                if(PosibleIr(RobotDireccion.Derecha, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila, this.Columna + 1].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila, this.Columna + 1]);
+                    }
+                }
+
+                if(PosibleIr(RobotDireccion.Abajo, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila + 1, this.Columna].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila + 1, this.Columna]);
+                    }
+                }
+
+                if(PosibleIr(RobotDireccion.Arriba, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila - 1, this.Columna].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila - 1, this.Columna]);
+                    }
+                }
+
+                if(PosibleIr(RobotDireccion.Izquierda, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila, this.Columna - 1].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila, this.Columna - 1]);
+                    }
+                }
+
+                
+
+                // Si me he podido mover
+                if(vecinos.Count > 0)
+                {
+                    //Ordeno la lista, escogemos el de menor coste y lo añadimos al camino.
+                    query = vecinos.OrderBy(x => x.Valor);
+                    this.Fila = query.ElementAt(0).Fila;
+                    this.Columna = query.ElementAt(0).Columna;
+                    jardinAux.Parcelas[this.Fila, this.Columna].Visitada = true;
+                    camino.Add(jardinAux.Parcelas[query.ElementAt(0).Fila, query.ElementAt(0).Columna]);
+                }
+                else
+                {
+                    if(camino.Count > 0)
+                    {
+                        this.Fila = camino[camino.Count - 2].Fila;
+                        this.Columna = camino[camino.Count - 2].Columna;
+                        camino.RemoveAt(camino.Count - 1);
+                    }
+                }
+
+                vecinos.Clear();
+
             }
+
+            caminos.Add(camino);
+
                         
+
+            // ================================= SEGUNDO BLOQUE DE DIRECCIONES =======================================
+            this.Fila = 0;
+            this.Columna = 0;
+            camino = new List<Parcela>();
+            foreach(Parcela p in jardinAux.Parcelas)
+            {
+                if(p.Visitada)
+                {
+                    p.Visitada = false;
+                }
+            }
+
+
+            while((this.Fila != destino.Fila) || (this.Columna != destino.Columna))
+            {
+
+                if(PosibleIr(RobotDireccion.Abajo, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila + 1, this.Columna].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila + 1, this.Columna]);
+                    }
+                }
+
+                if(PosibleIr(RobotDireccion.Izquierda, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila, this.Columna - 1].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila, this.Columna - 1]);
+                    }
+                }
+
+                if(PosibleIr(RobotDireccion.Derecha, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila, this.Columna + 1].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila, this.Columna + 1]);
+                    }
+                }
+
+                if(PosibleIr(RobotDireccion.Arriba, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila - 1, this.Columna].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila - 1, this.Columna]);
+                    }
+                }
+                
+                // Si me he podido mover
+                if(vecinos.Count > 0)
+                {
+                    //Ordeno la lista, escogemos el de menor coste y lo añadimos al camino.
+                    query = vecinos.OrderBy(x => x.Valor);
+                    
+                    //vecinos = vecinos.OrderBy(x => x.Valor).ToList<Parcela>();
+                    
+                    this.Fila = query.ElementAt(0).Fila;
+                    this.Columna = query.ElementAt(0).Columna;
+                    jardinAux.Parcelas[this.Fila, this.Columna].Visitada = true;
+                    camino.Add(jardinAux.Parcelas[query.ElementAt(0).Fila, query.ElementAt(0).Columna]);
+                }
+                else
+                {
+                    if(camino.Count > 0)
+                    {
+                        this.Fila = camino[camino.Count - 2].Fila;
+                        this.Columna = camino[camino.Count - 2].Columna;
+                        camino.RemoveAt(camino.Count - 1);
+                    }
+                }
+
+                vecinos.Clear();
+
+            }
+
+            caminos.Add(camino);
+            
+
+            // ================================= TERCER BLOQUE DE DIRECCIONES =======================================
+            this.Fila = 0;
+            this.Columna = 0;
+            camino = new List<Parcela>();
+            foreach(Parcela p in jardinAux.Parcelas)
+            {
+                if(p.Visitada)
+                {
+                    p.Visitada = false;
+                }
+            }
+
+
+            while((this.Fila != destino.Fila) || (this.Columna != destino.Columna))
+            {
+                if(PosibleIr(RobotDireccion.Izquierda, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila, this.Columna - 1].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila, this.Columna - 1]);
+                    }
+                }
+
+                if(PosibleIr(RobotDireccion.Arriba, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila - 1, this.Columna].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila - 1, this.Columna]);
+                    }
+                }
+
+                if(PosibleIr(RobotDireccion.Abajo, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila + 1, this.Columna].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila + 1, this.Columna]);
+                    }
+                }
+
+                if(PosibleIr(RobotDireccion.Derecha, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila, this.Columna + 1].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila, this.Columna + 1]);
+                    }
+                }
+                
+                
+
+                // Si me he podido mover
+                if(vecinos.Count > 0)
+                {
+                    //Ordeno la lista, escogemos el de menor coste y lo añadimos al camino.
+                    query = vecinos.OrderBy(x => x.Valor);
+
+                    this.Fila = query.ElementAt(0).Fila;
+                    this.Columna = query.ElementAt(0).Columna;
+                    jardinAux.Parcelas[this.Fila, this.Columna].Visitada = true;
+                    camino.Add(jardinAux.Parcelas[query.ElementAt(0).Fila, query.ElementAt(0).Columna]);
+                }
+                else
+                {
+                    if(camino.Count > 0)
+                    {
+                        this.Fila = camino[camino.Count - 2].Fila;
+                        this.Columna = camino[camino.Count - 2].Columna;
+                        camino.RemoveAt(camino.Count - 1);
+                    }
+                }
+
+                vecinos.Clear();
+
+            }
+
+            caminos.Add(camino);
+            
+
+            // ================================= CUARTO BLOQUE DE DIRECCIONES =======================================
+            this.Fila = 0;
+            this.Columna = 0;
+            camino = new List<Parcela>();
+            foreach(Parcela p in jardinAux.Parcelas)
+            {
+                if(p.Visitada)
+                {
+                    p.Visitada = false;
+                }
+            }
+
+            while((this.Fila != destino.Fila) || (this.Columna != destino.Columna))
+            {
+                if(PosibleIr(RobotDireccion.Arriba, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila - 1, this.Columna].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila - 1, this.Columna]);
+                    }
+                }
+
+                if(PosibleIr(RobotDireccion.Derecha, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila, this.Columna + 1].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila, this.Columna + 1]);
+                    }
+                }
+
+                if(PosibleIr(RobotDireccion.Izquierda, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila, this.Columna - 1].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila, this.Columna - 1]);
+                    }
+                }
+
+                if(PosibleIr(RobotDireccion.Abajo, jardinAux))
+                {
+                    if(!jardinAux.Parcelas[this.Fila + 1, this.Columna].Visitada)
+                    {
+                        vecinos.Add(jardinAux.Parcelas[this.Fila + 1, this.Columna]);
+                    }
+                }
+                
+                // Si me he podido mover
+                if(vecinos.Count > 0)
+                {
+                    //Ordeno la lista, escogemos el de menor coste y lo añadimos al camino.
+                    query = vecinos.OrderBy(x => x.Valor);
+
+                    this.Fila = query.ElementAt(0).Fila;
+                    this.Columna = query.ElementAt(0).Columna;
+                    jardinAux.Parcelas[this.Fila, this.Columna].Visitada = true;
+                    camino.Add(jardinAux.Parcelas[query.ElementAt(0).Fila, query.ElementAt(0).Columna]);
+                }
+                else
+                {
+                    if(camino.Count > 0)
+                    {
+                        this.Fila = camino[camino.Count - 2].Fila;
+                        this.Columna = camino[camino.Count - 2].Columna;
+                        camino.RemoveAt(camino.Count - 1);
+                    }
+                }
+
+                vecinos.Clear();
+
+            }
+
+            caminos.Add(camino);
+            
+
+            Int32 valorMin = Int32.MaxValue;
+
+            foreach(List<Parcela> lista in caminos)
+            {
+                if(lista.Count < valorMin)
+                {
+                    valorMin = lista.Count;
+                    m_CaminoCopia.Clear();
+                    m_CaminoCopia = lista;
+                }
+            }
+
+            Parcela po = new Parcela();
         }
 
 
@@ -768,74 +1036,3 @@ namespace Cortacesped.Clases
 
     }
 }
-
-
-            /* Metodo de calculo usando un foreach obtenemos todas las distancias al destino.
-            Boolean movimiento = false;            
-            foreach(Parcela parcelaAux in jardinAux.Parcelas)
-            {
-                this.Fila = parcelaAux.Fila;
-                this.Columna = parcelaAux.Columna;
-                
-                // Analizamos si es posible ir a todas las direcciones y marcamos con
-                // los valores correspondientes a cada parcela vecina.
-                if(PosibleIr(RobotDireccion.Derecha, jardinAux))
-                {
-                    if(!jardinAux.Parcelas[this.Fila, this.Columna + 1].Visitada)
-                    {
-                        valorSiguiente = CalcularValorParcela(jardinAux.Parcelas[this.Fila, this.Columna + 1], origen, destino);
-                        jardinAux.Parcelas[this.Fila, this.Columna + 1].Valor = valorSiguiente;
-                        jardinAux.Parcelas[this.Fila, this.Columna + 1].Visitada = true;
-                        movimiento = true;
-                    }
-                    
-                }
-
-                if(PosibleIr(RobotDireccion.Abajo, jardinAux))
-                {
-                    if(!jardinAux.Parcelas[this.Fila + 1, this.Columna].Visitada)
-                    {
-                        valorSiguiente = CalcularValorParcela(jardinAux.Parcelas[this.Fila + 1, this.Columna], origen, destino);
-                        jardinAux.Parcelas[this.Fila + 1, this.Columna].Valor = valorSiguiente;
-                        jardinAux.Parcelas[this.Fila + 1, this.Columna].Visitada = true;
-                        movimiento = true;
-                    }
-                    
-                    
-                }
-
-                if(PosibleIr(RobotDireccion.Izquierda, jardinAux))
-                {
-                    if(!jardinAux.Parcelas[this.Fila, this.Columna - 1].Visitada)
-                    {
-                        valorSiguiente = CalcularValorParcela(jardinAux.Parcelas[this.Fila, this.Columna - 1], origen, destino);
-                        jardinAux.Parcelas[this.Fila, this.Columna - 1].Valor = valorSiguiente;
-                        jardinAux.Parcelas[this.Fila, this.Columna - 1].Visitada = true;
-                        movimiento = true;
-                    }
-                    
-                }
-
-                if(PosibleIr(RobotDireccion.Arriba, jardinAux))
-                {
-                    if(!jardinAux.Parcelas[this.Fila - 1, this.Columna].Visitada)
-                    {
-                        valorSiguiente = CalcularValorParcela(jardinAux.Parcelas[this.Fila - 1, this.Columna], origen, destino);
-                        jardinAux.Parcelas[this.Fila - 1, this.Columna].Valor = valorSiguiente;
-                        jardinAux.Parcelas[this.Fila - 1, this.Columna].Visitada = true;
-                        movimiento = true;
-                    }
-                }
-
-                if(!movimiento)
-                {
-                    jardinAux.Parcelas[parcelaAux.Fila, parcelaAux.Columna].Valor = Int32.MaxValue;
-                }
-                else
-                {
-                    movimiento = false;
-                }
-                
-            }
-
-            */
