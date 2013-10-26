@@ -52,7 +52,11 @@ namespace Cortacesped.Clases
             if(obj is Parcela)
             {
                 parcela = obj as Parcela;
-                if((this.Fila == parcela.Fila) && (this.Columna == parcela.Columna))
+                //if((this.Fila == parcela.Fila) && (this.Columna == parcela.Columna))
+                //{
+                //    flag = true;
+                //}
+                if((this.Location.X == parcela.Location.X) && (this.Location.Y == parcela.Location.Y))
                 {
                     flag = true;
                 }

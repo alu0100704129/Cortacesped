@@ -117,7 +117,7 @@ namespace Cortacesped
             m_Robot.Location = new Point(0, 0);
             m_Robot.Image = Cortacesped.Properties.Resources.Robot_Right;
             
-            jardin.Parcelas[0, 0].Visitada = true;
+            
             
         }
 
@@ -213,13 +213,15 @@ namespace Cortacesped
                     jardin.Parcelas[fil, col] = parcela;
                 }
             }
-            jardin.Parcelas[0, 0].Tag = "Cesped_Corto";
-            jardin.Parcelas[0, 0].Image = Cortacesped.Properties.Resources.Cesped_Corto;
-            jardin.Parcelas[0, 0].Visitada = true;
+            //jardin.Parcelas[0, 0].Tag = "Cesped_Corto";
+            //jardin.Parcelas[0, 0].Image = Cortacesped.Properties.Resources.Cesped_Corto;
+            //jardin.Parcelas[0, 0].Visitada = true;
 
             m_Robot = new Robot();
             m_Robot.Fila = 0;
             m_Robot.Columna = 0;
+            m_Robot.Origen = jardin.Parcelas[0, 0];
+            m_Robot.Destino = jardin.Parcelas[0, 0];
             m_Robot.Pasos = 0;
             m_Robot.Name = "Id_Robot";
             m_Robot.Tag = "Robot";

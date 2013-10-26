@@ -13,6 +13,8 @@ namespace Cortacesped.Clases
         private RobotDireccion m_Direccion;
         private List<Parcela> m_Camino;
         private List<Parcela> m_CaminoCopia;
+        private Parcela m_Origen;
+        private Parcela m_Destino;
         
         public Robot() 
         {
@@ -31,6 +33,18 @@ namespace Cortacesped.Clases
         {
             get { return m_Direccion; }
             set { m_Direccion = value; }
+        }
+
+        public Parcela Origen
+        {
+            get { return m_Origen; }
+            set { m_Origen = value; }
+        }
+
+        public Parcela Destino
+        {
+            get { return m_Destino; }
+            set { m_Destino = value; }
         }
 
         public enum RobotDireccion
@@ -54,8 +68,8 @@ namespace Cortacesped.Clases
         {
             m_Camino.Clear();
             m_CaminoCopia.Clear();
-            m_Camino.Add(jardinAux.Parcelas[0, 0]);
-            m_CaminoCopia.Add(jardinAux.Parcelas[0, 0]);
+            m_Camino.Add(this.Origen);
+            m_CaminoCopia.Add(this.Origen);
             Amplitud(jardinAux);
             return m_CaminoCopia;
         }
@@ -305,7 +319,7 @@ namespace Cortacesped.Clases
             this.Fila = origen.Fila;
             this.Columna = origen.Columna;
 
-            DfsMinimoNew(jardinAux, destino);
+            DfsMinimoNew(jardinAux, origen, destino);
             
             return m_CaminoCopia;
 
@@ -516,7 +530,7 @@ namespace Cortacesped.Clases
 
 
 
-        private void DfsMinimoNew(Jardin jardinAux, Parcela destino)
+        private void DfsMinimoNew(Jardin jardinAux, Parcela origen, Parcela destino)
         {
             
             List<Parcela> vecinos = new List<Parcela>();
@@ -592,8 +606,8 @@ namespace Cortacesped.Clases
                         
 
             // ================================= SEGUNDO BLOQUE DE DIRECCIONES =======================================
-            this.Fila = 0;
-            this.Columna = 0;
+            this.Fila = origen.Fila;
+            this.Columna = origen.Columna;
             camino = new List<Parcela>();
             foreach(Parcela p in jardinAux.Parcelas)
             {
@@ -670,8 +684,8 @@ namespace Cortacesped.Clases
             
 
             // ================================= TERCER BLOQUE DE DIRECCIONES =======================================
-            this.Fila = 0;
-            this.Columna = 0;
+            this.Fila = origen.Fila;
+            this.Columna = origen.Columna;
             camino = new List<Parcela>();
             foreach(Parcela p in jardinAux.Parcelas)
             {
@@ -747,8 +761,8 @@ namespace Cortacesped.Clases
             
 
             // ================================= CUARTO BLOQUE DE DIRECCIONES =======================================
-            this.Fila = 0;
-            this.Columna = 0;
+            this.Fila = origen.Fila;
+            this.Columna = origen.Columna;
             camino = new List<Parcela>();
             foreach(Parcela p in jardinAux.Parcelas)
             {
@@ -982,7 +996,7 @@ namespace Cortacesped.Clases
             
         }
                 
-        public void Cortar(ref Parcela parcela)
+        public void Cortar(Parcela parcela)
         {
             parcela.Tag = "Cesped_Corto";
             parcela.Image = Cortacesped.Properties.Resources.Cesped_Corto;
