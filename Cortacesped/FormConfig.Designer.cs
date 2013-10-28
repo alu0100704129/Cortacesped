@@ -110,11 +110,6 @@
             // numericAncho
             // 
             this.numericAncho.Location = new System.Drawing.Point(224, 28);
-            this.numericAncho.Maximum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
             this.numericAncho.Minimum = new decimal(new int[] {
             5,
             0,
@@ -133,11 +128,6 @@
             // numericAlto
             // 
             this.numericAlto.Location = new System.Drawing.Point(127, 28);
-            this.numericAlto.Maximum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
             this.numericAlto.Minimum = new decimal(new int[] {
             5,
             0,

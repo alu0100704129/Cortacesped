@@ -40,7 +40,7 @@ namespace Cortacesped.Clases
         
         public Jardin(Int32 filas, Int32 columnas)
         {
-            if((filas > 4) && (filas < 201) && (columnas > 4) && (columnas < 201))
+            if((filas > 4) && (filas < 101) && (columnas > 4) && (columnas < 101))
             {
                 m_Filas = filas;
                 m_Columnas = columnas;

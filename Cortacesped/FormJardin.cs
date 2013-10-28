@@ -23,6 +23,7 @@ namespace Cortacesped
         private Resultado resultado;
         private Boolean m_BotonDown;
         private Int32 m_PosX, m_PosY;
+        private Int32 m_Velocidad;
                 
         public FormJardin(ref Jardin jardin, ref Robot robot, String algoritmo, Int32 velocidad, ref Resultado result)
         {
@@ -31,19 +32,26 @@ namespace Cortacesped
             m_Camino = new List<Parcela>();
             m_Algoritmo = algoritmo;
             resultado = result;
+            m_Velocidad = velocidad;
 
-            m_Destino = m_Jardin.Parcelas[m_Jardin.Filas - 1, m_Jardin.Columnas - 1];
+            m_Destino = m_Robot.Destino; // m_Jardin.Parcelas[m_Jardin.Filas - 1, m_Jardin.Columnas - 1];
             m_Destino.BorderStyle = BorderStyle.None;
 
+            
             InitializeComponent();
-            IniciarObjetosGraficos();
+
             ResizeForm();
-            this.timerVelocidad.Interval = velocidad;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            
         }
 
         private void FormJardin_Load(object sender, EventArgs e)
         {
+            this.SuspendLayout();
+            IniciarObjetosGraficos();
             
+            this.timerVelocidad.Interval = m_Velocidad;
+            this.ResumeLayout();
         }
 
         private void FormJardin_FormClosing(object sender, FormClosingEventArgs e)
@@ -61,12 +69,13 @@ namespace Cortacesped
         private void ResizeForm()
         {
             this.ClientSize = new Size(m_Jardin.Columnas*m_Robot.Width, m_Jardin.Filas*m_Robot.Width);
-            this.StartPosition = FormStartPosition.CenterScreen;
+            
         }
 
         private void IniciarObjetosGraficos()
         {
             Int32 dimension = m_Jardin.Parcelas[0, 0].Size.Width;
+            
             for(Int32 f = 0; f < m_Jardin.Filas; f++)
             {
                 for(Int32 r = 0; r < m_Jardin.Columnas; r++)

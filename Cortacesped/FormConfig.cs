@@ -111,13 +111,11 @@ namespace Cortacesped
                     }
                 }
             }
-            m_Robot.Fila = 0;
-            m_Robot.Columna = 0;
+            m_Robot.Fila = m_Robot.Origen.Fila;
+            m_Robot.Columna = m_Robot.Origen.Columna;
             m_Robot.Pasos = 0;
-            m_Robot.Location = new Point(0, 0);
+            m_Robot.Location = new Point(m_Robot.Origen.Location.X, m_Robot.Origen.Location.Y);
             m_Robot.Image = Cortacesped.Properties.Resources.Robot_Right;
-            
-            
             
         }
 
@@ -150,6 +148,7 @@ namespace Cortacesped
             FormJardin f = new FormJardin(ref jardin, ref m_Robot, m_Algoritmo, this.tbVelocidad.Value, ref resultado);
             this.Visible = false;
             f.ShowDialog(this);
+            
             this.Visible = true;
             this.Text = "Configuración del jardin - " + m_Robot.Pasos.ToString() + " pasos.";
             
@@ -200,7 +199,7 @@ namespace Cortacesped
                 {
                     // Creamos un NUEVO control que es un objeto de tipo Parcela que hereda de PictureBox
                     Parcela parcela = new Parcela();
-
+                    
                     // Le asignamos las propiadades básicas al control teniendo en cuenta que es un PictureBox
                     parcela.Fila = fil;
                     parcela.Columna = col;
