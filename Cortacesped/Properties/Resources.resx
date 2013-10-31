@@ -121,11 +121,14 @@
   <data name="Cesped_Corto" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Cesped_Corto.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="docExcel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\doc excel.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Robot_Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Robot_Down.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Cesped_Largo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Cesped_Largo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Robot_Left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Robot_Left.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Arbol" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Arbol.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -139,10 +142,10 @@
   <data name="Robot_Right" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Robot_Right.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Robot_Left" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Robot_Left.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Cesped_Largo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Cesped_Largo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="docExcel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\doc excel.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\delete.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

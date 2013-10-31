@@ -5,13 +5,18 @@ using System.Text;
 
 namespace Cortacesped.Clases
 {
+    /*
+     * Esta clase representa el jardín, tiene un atributo para guardar las filas 
+     * y otro para las columnas. También posee n atributo de tipo 
+     * Array bidimensional de objetos de tipo Parcela.
+     */
     public class Jardin
     {
-
         private Int32 m_Filas;
         private Int32 m_Columnas;
         private Parcela[,] m_Parcelas;
 
+        // Constructor de copia.
         public Jardin(Jardin originalJardin)
         {
             m_Filas = originalJardin.Filas;
@@ -38,6 +43,7 @@ namespace Cortacesped.Clases
             }
         }
         
+        // Constructor que recibe el tamaño
         public Jardin(Int32 filas, Int32 columnas)
         {
             if((filas > 4) && (filas < 101) && (columnas > 4) && (columnas < 101))
@@ -71,6 +77,7 @@ namespace Cortacesped.Clases
             set { m_Parcelas = value; }
         }
         
+        // Función que devuelve el mismo jardín (this) con el cesped sin cortar.
         public Jardin RestablecerJardin()
         {
             for(int fil = 0; fil < this.Filas; fil++)

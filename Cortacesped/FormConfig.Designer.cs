@@ -45,6 +45,7 @@
             this.rbProfundidad = new System.Windows.Forms.RadioButton();
             this.dgvResultados = new System.Windows.Forms.DataGridView();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnBorrar = new System.Windows.Forms.Button();
             this.btnExcel = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.lbVelocidad = new System.Windows.Forms.Label();
@@ -251,7 +252,7 @@
             // 
             this.dgvResultados.AllowUserToAddRows = false;
             this.dgvResultados.AllowUserToDeleteRows = false;
-            this.dgvResultados.AllowUserToResizeColumns = false;
+            this.dgvResultados.AllowUserToOrderColumns = true;
             this.dgvResultados.AllowUserToResizeRows = false;
             this.dgvResultados.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
@@ -260,6 +261,7 @@
             this.dgvResultados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvResultados.Location = new System.Drawing.Point(6, 19);
             this.dgvResultados.Name = "dgvResultados";
+            this.dgvResultados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvResultados.Size = new System.Drawing.Size(509, 138);
             this.dgvResultados.TabIndex = 11;
             // 
@@ -268,6 +270,7 @@
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.Controls.Add(this.btnBorrar);
             this.groupBox4.Controls.Add(this.btnExcel);
             this.groupBox4.Controls.Add(this.dgvResultados);
             this.groupBox4.Location = new System.Drawing.Point(12, 187);
@@ -277,13 +280,27 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Estadísticas";
             // 
+            // btnBorrar
+            // 
+            this.btnBorrar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBorrar.Image = global::Cortacesped.Properties.Resources.delete;
+            this.btnBorrar.Location = new System.Drawing.Point(521, 19);
+            this.btnBorrar.Name = "btnBorrar";
+            this.btnBorrar.Size = new System.Drawing.Size(59, 40);
+            this.btnBorrar.TabIndex = 13;
+            this.btnBorrar.Text = "&Borrar fila";
+            this.btnBorrar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnBorrar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnBorrar.UseVisualStyleBackColor = true;
+            this.btnBorrar.Click += new System.EventHandler(this.btnBorrar_Click);
+            // 
             // btnExcel
             // 
             this.btnExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExcel.Image = global::Cortacesped.Properties.Resources.docExcel;
-            this.btnExcel.Location = new System.Drawing.Point(521, 101);
+            this.btnExcel.Location = new System.Drawing.Point(521, 117);
             this.btnExcel.Name = "btnExcel";
-            this.btnExcel.Size = new System.Drawing.Size(59, 56);
+            this.btnExcel.Size = new System.Drawing.Size(59, 40);
             this.btnExcel.TabIndex = 12;
             this.btnExcel.Text = "&Exportar";
             this.btnExcel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -328,7 +345,7 @@
             // 
             this.btnRepetir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRepetir.Image = ((System.Drawing.Image)(resources.GetObject("btnRepetir.Image")));
-            this.btnRepetir.Location = new System.Drawing.Point(538, 95);
+            this.btnRepetir.Location = new System.Drawing.Point(538, 141);
             this.btnRepetir.Name = "btnRepetir";
             this.btnRepetir.Size = new System.Drawing.Size(59, 40);
             this.btnRepetir.TabIndex = 9;
@@ -342,7 +359,7 @@
             // 
             this.btnIniciar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnIniciar.Image = global::Cortacesped.Properties.Resources.ok;
-            this.btnIniciar.Location = new System.Drawing.Point(538, 141);
+            this.btnIniciar.Location = new System.Drawing.Point(538, 91);
             this.btnIniciar.Name = "btnIniciar";
             this.btnIniciar.Size = new System.Drawing.Size(59, 40);
             this.btnIniciar.TabIndex = 4;
@@ -359,11 +376,12 @@
             this.ClientSize = new System.Drawing.Size(609, 362);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnRepetir);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnIniciar);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(625, 400);
             this.Name = "FormConfig";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -410,5 +428,6 @@
         private System.Windows.Forms.TrackBar tbVelocidad;
         private System.Windows.Forms.Label lbVelocidad;
         private System.Windows.Forms.Button btnExcel;
+        private System.Windows.Forms.Button btnBorrar;
     }
 }

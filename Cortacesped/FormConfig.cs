@@ -23,16 +23,17 @@ namespace Cortacesped
         private Resultado resultado;
         private BindingList<Resultado> resultados;
 
+        // Constructor.
         public FormConfig()
         {
             InitializeComponent();
             m_Algoritmo = "Profundidad";
             this.lbVelocidad.Text = this.tbVelocidad.Value.ToString() + "/ms";
-            
             resultados = new BindingList<Resultado>();
             this.dgvResultados.DataSource = resultados;
         }
 
+        // Evento para el CheckBox Dimensión
         private void ckAutoDimension_CheckedChanged(object sender, EventArgs e)
         {
             if(this.ckAutoDimension.Checked)
@@ -47,6 +48,7 @@ namespace Cortacesped
             }
         }
 
+        // Evento para el CheckBox Obstaculos
         private void ckManualObstaculos_CheckedChanged(object sender, EventArgs e)
         {
             if(this.ckManualObstaculos.Checked)
@@ -59,11 +61,13 @@ namespace Cortacesped
             }
         }
 
+        // Evento del boton iniciar
         private void btnIniciar_Click(object sender, EventArgs e)
         {
             InitializeJardin();
         }
 
+        // evento del boton Repetir
         private void btnRepetir_Click(object sender, EventArgs e)
         {
             if(jardin != null)
@@ -73,14 +77,15 @@ namespace Cortacesped
                 resultado.Algoritmo = m_Algoritmo;
                 resultado.Alto = jardin.Filas;
                 resultado.Ancho = jardin.Columnas;
+                resultado.Pasos = 0;
+                resultado.Obstaculos = 0;
+                m_Robot.Pasos = 0;
                                 
                 FormJardin f = new FormJardin(ref jardin, ref m_Robot, m_Algoritmo, this.tbVelocidad.Value, ref resultado);
                 this.Visible = false;
                 f.ShowDialog(this);
                 this.Visible = true;
-                this.Text = "Configuración del jardin - " + m_Robot.Pasos.ToString() + " pasos.";
-
-                resultado.Obstaculos = 0;
+                                
                 foreach(Parcela p in jardin.Parcelas)
                 {
                     if(p.Tag.ToString().Contains("Arbol"))
@@ -90,13 +95,14 @@ namespace Cortacesped
                 }
 
                 resultado.Parcelas = (jardin.Filas * jardin.Columnas) - resultado.Obstaculos;
-                resultado.Pasos += m_Robot.Pasos;
+                resultado.Pasos = m_Robot.Pasos;
 
                 resultados.Add(resultado);
                                 
             }
         }
 
+        // Metodo para restablecer el jardin a su estado original
         private void RestablecerJardin()
         {
             for(int fil = 0; fil < jardin.Filas; fil++)
@@ -119,10 +125,12 @@ namespace Cortacesped
             
         }
 
+        // Metodo para inicializar y calcular el jardin
         private void InitializeJardin()
         {
             Int32 fil, col;
             Random rnd;
+            resultado = new Resultado();
             if(this.ckAutoDimension.Checked)
             {
                 rnd = new Random(DateTime.Now.Millisecond);
@@ -139,21 +147,19 @@ namespace Cortacesped
             
             ConstruirJardin(fil, col, this.ckManualObstaculos.Checked);
 
-            resultado = new Resultado();
-
             resultado.Algoritmo = m_Algoritmo;
             resultado.Alto = jardin.Filas;
             resultado.Ancho = jardin.Columnas;
+            resultado.Pasos = 0;
+            resultado.Obstaculos = 0;
+            m_Robot.Pasos = 0;
             
             FormJardin f = new FormJardin(ref jardin, ref m_Robot, m_Algoritmo, this.tbVelocidad.Value, ref resultado);
             this.Visible = false;
             f.ShowDialog(this);
             
             this.Visible = true;
-            this.Text = "Configuración del jardin - " + m_Robot.Pasos.ToString() + " pasos.";
-            
-            
-            resultado.Obstaculos = 0;
+                        
             foreach(Parcela p in jardin.Parcelas)
             {
                 if(p.Tag.ToString().Contains("Arbol"))
@@ -162,17 +168,12 @@ namespace Cortacesped
                 }
             }
             resultado.Parcelas = (jardin.Filas * jardin.Columnas) - resultado.Obstaculos;
-            resultado.Pasos += m_Robot.Pasos;
+            resultado.Pasos = m_Robot.Pasos;
             resultados.Add(resultado);
-
-            //this.dataGridView1.DataSource = resultados;
-            //this.dataGridView1.Refresh();
-            //this.Refresh();
-
-
 
         }
 
+        // Metodo para construir el jardin
         private void ConstruirJardin(Int32 filas, Int32 columnas, Boolean obstaculosManual)
         {
             Int32 posX, posY, dimension;
@@ -212,10 +213,7 @@ namespace Cortacesped
                     jardin.Parcelas[fil, col] = parcela;
                 }
             }
-            //jardin.Parcelas[0, 0].Tag = "Cesped_Corto";
-            //jardin.Parcelas[0, 0].Image = Cortacesped.Properties.Resources.Cesped_Corto;
-            //jardin.Parcelas[0, 0].Visitada = true;
-
+            
             m_Robot = new Robot();
             m_Robot.Fila = 0;
             m_Robot.Columna = 0;
@@ -247,6 +245,7 @@ namespace Cortacesped
             }
         }
 
+        // Controlador de eventos para los radioButtons
         private void radioButtons_CheckedChanged(object sender, EventArgs e)
         {
             RadioButton rb = sender as RadioButton;
@@ -272,42 +271,30 @@ namespace Cortacesped
             }
         }
 
+        // Controlador de evento para el desplazador de velocidad
         private void tbVelocidad_Scroll(object sender, EventArgs e)
         {
             this.lbVelocidad.Text = this.tbVelocidad.Value.ToString() + "/ms";
         }
 
+        // Evento para el boton exportar
         private void btnExcel_Click(object sender, EventArgs e)
         {
-            
-            // Cambiar la referencia cultural antes de ejecutar el proceso
-            //CultureInfo CurrentCI = Thread.CurrentThread.CurrentCulture;
-            //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-
-            //ExcelApp.Application excel = new ExcelApp.Application();
-            //ExcelApp.Workbook wrkBooks = excel.Workbooks.Add(Type.Missing);
-            //excel.DisplayAlerts = false;
-
-
+            // Creación dinamica de un documento excel.
             Microsoft.Office.Interop.Excel.Application aplicacion;
-
             Microsoft.Office.Interop.Excel.Workbook libros_trabajo;
             Microsoft.Office.Interop.Excel.Worksheet hoja_trabajo;
             aplicacion = new Microsoft.Office.Interop.Excel.Application();
-
-
 
             libros_trabajo = aplicacion.Workbooks.Add();
             hoja_trabajo = (Microsoft.Office.Interop.Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
 
             hoja_trabajo.Application.ActiveWindow.DisplayGridlines = false;
 
-
             for(int i = 1; i < this.dgvResultados.Columns.Count + 1; i++)
             {
                 hoja_trabajo.Cells[1, i] = this.dgvResultados.Columns[i - 1].HeaderText;
             }
-
 
             //Recorremos el DataGridView rellenando la hoja de trabajo
             for(int i = 0; i < this.dgvResultados.Rows.Count; i++)
@@ -334,12 +321,9 @@ namespace Cortacesped
             datosRange.Cells.HorizontalAlignment = HorizontalAlignment.Center;
             datosRange.Cells.VerticalAlignment = HorizontalAlignment.Center;
 
-            //* Añadir un grafico al Excel.
-            //Add a Chart for the selected data.
-
+            // Añadir un grafico al Excel.
             ExcelApp.ChartObjects oChart;
-                
-            //wrkBooks = (ExcelApp._Workbook)ws.Parent;
+            
             oChart = (ExcelApp.ChartObjects)hoja_trabajo.ChartObjects(Type.Missing);
             ExcelApp.ChartObject myChart = oChart.Add(320, 20, 400, 300);
             ExcelApp.Chart chartPage = myChart.Chart;
@@ -353,33 +337,38 @@ namespace Cortacesped
 
             chartPage.PlotBy = ExcelApp.XlRowCol.xlColumns;
             
-
             aplicacion.Visible = true;
             aplicacion.UserControl = true;
             
             aplicacion = null;
-
             
-
-            /*
-            ExcelApp.Range oRange;
-            oRange = ws.get_Range("A2", "A3");
-            oRange.Font.Size = 22;
-            oRange.Font.Shadow = true;
-            */
-            
-            //ws.Cells[2, 1] = "Prueba 1.";
-            //ws.Cells[3, 1] = "Prueba 2";
-
-                        
-
-            
-
-
-
-
         }
 
+        // Evento para el boton de borrar fila
+        private void btnBorrar_Click(object sender, EventArgs e)
+        {
+            if(this.dgvResultados.SelectedRows.Count == 1)
+            {
+                DataGridViewRow row = this.dgvResultados.SelectedRows[0];
+                Resultado seleccion = new Resultado();
+                seleccion.Algoritmo = row.Cells["Algoritmo"].Value.ToString();
+                seleccion.Alto = Int32.Parse(row.Cells["Alto"].Value.ToString());
+                seleccion.Ancho = Int32.Parse(row.Cells["Ancho"].Value.ToString());
+                seleccion.Obstaculos = Int32.Parse(row.Cells["Obstaculos"].Value.ToString());
+                seleccion.Parcelas = Int32.Parse(row.Cells["Parcelas"].Value.ToString());
+                seleccion.Pasos = Int32.Parse(row.Cells["Pasos"].Value.ToString());
+                seleccion.Tiempo = Int32.Parse(row.Cells["Tiempo"].Value.ToString());
+                                
+                foreach(Resultado r in resultados)
+                {
+                    if(seleccion.Equals(r))
+                    {
+                        resultados.Remove(r);
+                        break;
+                    }
+                }
+            }
+        }
                 
     }
 }

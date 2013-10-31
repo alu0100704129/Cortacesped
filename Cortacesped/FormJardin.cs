@@ -27,6 +27,7 @@ namespace Cortacesped
                 
         public FormJardin(ref Jardin jardin, ref Robot robot, String algoritmo, Int32 velocidad, ref Resultado result)
         {
+            
             m_Jardin = jardin;
             m_Robot = robot;
             m_Camino = new List<Parcela>();
@@ -34,10 +35,9 @@ namespace Cortacesped
             resultado = result;
             m_Velocidad = velocidad;
 
-            m_Destino = m_Robot.Destino; // m_Jardin.Parcelas[m_Jardin.Filas - 1, m_Jardin.Columnas - 1];
+            m_Destino = m_Robot.Destino;
             m_Destino.BorderStyle = BorderStyle.None;
-
-            
+                        
             InitializeComponent();
 
             ResizeForm();
@@ -49,7 +49,6 @@ namespace Cortacesped
         {
             this.SuspendLayout();
             IniciarObjetosGraficos();
-            
             this.timerVelocidad.Interval = m_Velocidad;
             this.ResumeLayout();
         }
@@ -63,13 +62,12 @@ namespace Cortacesped
                     DisableParcela_Click(ref m_Jardin.Parcelas[fil, col]);
                 }
             }
-            m_Robot.MouseClick -= Evento_Click;
+            this.timerVelocidad.Enabled = false;
         }
 
         private void ResizeForm()
         {
             this.ClientSize = new Size(m_Jardin.Columnas*m_Robot.Width, m_Jardin.Filas*m_Robot.Width);
-            
         }
 
         private void IniciarObjetosGraficos()
@@ -87,6 +85,7 @@ namespace Cortacesped
                     this.Controls.Add(m_Jardin.Parcelas[f, r]);
                 }
             }
+
             m_Robot.MouseClick += new MouseEventHandler(Evento_Click);
             m_Robot.MouseDown += new MouseEventHandler(Robot_MouseDown);
             m_Robot.MouseMove += new MouseEventHandler(Robot_MouseMove);
@@ -98,9 +97,7 @@ namespace Cortacesped
 
         private void Robot_MouseDown(object sender, MouseEventArgs e)
         {
-            // el boton izquierdo esta pulsado
-
-            
+            // Si se ha pulsado el boton izquierdo
             if(e.Button == MouseButtons.Right)
             {
                 m_BotonDown = true;
@@ -109,11 +106,11 @@ namespace Cortacesped
             }
         }
 
+        // Eventi para mover el robot con el raton
         private void Robot_MouseMove(object sender, MouseEventArgs e)
         {
             if(m_BotonDown)
             {
-                // mover el pictureBox con el raton               
                 m_Robot.Left += e.X - m_PosX;
                 m_Robot.Top += e.Y - m_PosY;
             }
@@ -121,23 +118,19 @@ namespace Cortacesped
 
         private void Robot_MouseUp(object sender, MouseEventArgs e)
         {
-            // el boton derecho se libera
+            // si el boton derecho se libera
             if(e.Button == MouseButtons.Right)
             {
                 m_BotonDown = false;
 
                 Int32 pX = m_Robot.Location.X;
                 Int32 pY = m_Robot.Location.Y;
-
                 Decimal ratioX = (Decimal)(pX / m_Robot.Width);
                 Decimal ratioY = (Decimal)(pY / m_Robot.Height);
-
                 Decimal mtrX = Math.Round(ratioX, 0, MidpointRounding.AwayFromZero);
                 Decimal mtrY = Math.Round(ratioY, 0, MidpointRounding.AwayFromZero);
-
                 Int32 posX = (Int32)mtrX * m_Robot.Width;
                 Int32 posY = (Int32)mtrY * m_Robot.Height;
-
                 m_Robot.Location = new Point(posX, posY);
 
                 foreach(Parcela p in m_Jardin.Parcelas)
@@ -150,13 +143,11 @@ namespace Cortacesped
                         break;
                     }
                 }
-
-
             }
+
         }
-
-
-
+        
+        // Evento Click de los objetos Parcela
         private void Evento_Click(object sender, MouseEventArgs e)
         {
             if(!m_BotonDown)
@@ -190,21 +181,29 @@ namespace Cortacesped
                     }
                     else if(parcela is Robot)
                     {
+                        // Desactivamos los eventos del robot.
                         m_Robot.MouseClick -= Evento_Click;
-
+                        m_Robot.MouseDown -= Robot_MouseDown;
+                        m_Robot.MouseMove -= Robot_MouseMove;
+                        m_Robot.MouseUp -= Robot_MouseUp;
+                        m_Robot.Pasos = 0;
+                        m_Camino.Clear();
                         m_Jardin.Parcelas[m_Robot.Origen.Fila, m_Robot.Origen.Columna].Visitada = true;
 
                         inicioTime = new DateTime(DateTime.Now.Ticks);
                         switch(m_Algoritmo)
                         {
                             case "Profundidad":
-                                m_Camino = m_Robot.RecorridoDFS(m_Jardin);
+                                m_Camino = m_Robot.RecorridoDFS(ref m_Jardin);
+                                m_Robot.Pasos = m_Camino.Count;
                                 break;
                             case "Amplitud":
-                                m_Camino = m_Robot.RecorridoBFS(m_Jardin);
+                                m_Camino = m_Robot.RecorridoBFS(ref m_Jardin);
+                                m_Robot.Pasos += m_Camino.Count;
                                 break;
                             case "Camino":
                                 m_Camino = m_Robot.CalcularCaminoMinimo(m_Jardin, m_Jardin.Parcelas[m_Robot.Fila, m_Robot.Columna], m_Destino);
+                                m_Robot.Pasos = m_Camino.Count;
                                 break;
                         }
                         finalTime = new DateTime(DateTime.Now.Ticks);
@@ -215,7 +214,18 @@ namespace Cortacesped
 
                         m_Robot.Cortar(m_Robot.Origen);
                         m_Jardin.Parcelas[m_Robot.Origen.Fila, m_Robot.Origen.Columna].Visitada = true;
-                        this.timerVelocidad.Enabled = true;
+                                                
+                        DialogResult result = MessageBox.Show("¿Desea visualizar el recrrido?", "Cortacesped", 
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if(result == DialogResult.No)
+                        {
+                            this.Close();
+                        }
+                        else
+                        {
+                            this.timerVelocidad.Enabled = true;
+                        }
+                        
                     }
                     else
                     {
@@ -225,21 +235,21 @@ namespace Cortacesped
                 }
             }
             
-            
         }
 
+        // Metodo para deshabilitar el evento Click de los objetos parcela
         private void DisableParcela_Click(ref Parcela parcela)
         {
             parcela.MouseClick -= Evento_Click;
         }
         
+        // Evento disparador del timer
         private void timerVelocidad_Tick(object sender, EventArgs e)
         {
             if(m_Camino.Count > 0)
             {
                 Mover();
                 m_Camino.RemoveAt(0);
-                this.Text = "Cortacesped - Pasos: " + m_Robot.Pasos.ToString();
             }
             else
             {
@@ -248,6 +258,7 @@ namespace Cortacesped
             }
         }
         
+        // Metodo para mover el robot en la pantalla grafica
         private void Mover()
         {
             Parcela p = m_Camino[0];
@@ -285,5 +296,6 @@ namespace Cortacesped
                 return;
             }
         }
+    
     }
 }
